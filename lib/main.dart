@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:sequence_manager/screens/auth/login_screen.dart';
+import 'screens/auth/auth_viewmodel.dart';
 
 void main() {
-  runApp(const MainApp());
+  runApp(
+    MultiProvider(providers: [
+      ChangeNotifierProvider(create: (_) => AuthViewModel()),
+    ], child: const MainApp()),
+  );
 }
 
 class MainApp extends StatelessWidget {
@@ -12,7 +19,7 @@ class MainApp extends StatelessWidget {
     return const MaterialApp(
       home: Scaffold(
         body: Center(
-          child: Text('Hello World!'),
+          child: LoginScreen(),
         ),
       ),
     );
