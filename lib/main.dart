@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sequence_manager/screens/auth/login_screen.dart';
 import 'screens/auth/auth_viewmodel.dart';
+import 'screens/employee/new_employee.dart';
 
 void main() {
   runApp(
@@ -19,7 +19,7 @@ class MainApp extends StatelessWidget {
     return const MaterialApp(
       home: Scaffold(
         body: Center(
-          child: LoginScreen(),
+          child: NewEmployeeScreen(),
         ),
       ),
     );
