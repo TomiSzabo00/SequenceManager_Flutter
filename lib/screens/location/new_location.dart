@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'new_location_viewmodel.dart';
 
 class NewLocationScreen extends StatelessWidget {
   final TextEditingController textController = TextEditingController();
-  final String name='T-com';
 
   NewLocationScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final viewModel = context.watch<NewLocationViewModel>();
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Edit location"),
+        title: const Text("Add new location"),
       ),
       body: Center(
         child: Padding(
@@ -20,17 +23,18 @@ class NewLocationScreen extends StatelessWidget {
             children: <Widget>[
               TextField(
                 controller: textController,
-                decoration: InputDecoration(
-                  labelText: "New name of $name",
+                decoration: const InputDecoration(
+                  labelText: "Name of new location",
+
                 ),
+                onChanged: (value) {
+                  viewModel.setName(value);
+                },
               ),
               const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
-                  // Handle the submit button press here
-                  String enteredText = textController.text;
-                  print('You entered: $enteredText');
-                  // You can process the entered text here
+                  viewModel.save();
                 },
                 child: const Text("Save"),
               ),

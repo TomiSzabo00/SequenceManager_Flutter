@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:sequence_manager/screens/employee/employee_viewmodel.dart';
 
 class WorkerScreen extends StatelessWidget {
-  final int calledNumber=100;
-  final String place="T-com";
 
   const WorkerScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final viewModel = context.watch<EmployeeViewModel>();
     return Scaffold(
       appBar: AppBar(
-        title:const Text("Dolgozói képernyő"),
+        title:const Text("Employee"),
       ),
       body: Center(
         child: Column(
@@ -18,7 +19,7 @@ class WorkerScreen extends StatelessWidget {
           children: <Widget>[
             const Text("Currently called number:"),
             Text(
-              calledNumber.toString(),
+              viewModel.getCalledNumber.toString(),
               style: const TextStyle(fontSize: 50),
             ),
             FractionallySizedBox(
@@ -27,15 +28,15 @@ class WorkerScreen extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(vertical: 10.0),
                 child: ElevatedButton(
                   onPressed: () {
-                    // Handle button 1 press
+                    viewModel.next();
                   },
-                  child: const Text("Következő"),
+                  child: const Text("Next"),
                 ),
               ),
             ),
             const Text("Current place:"),
             Text(
-              place,
+              viewModel.getPlace,
               style: const TextStyle(fontSize: 20),
             ),
           ],

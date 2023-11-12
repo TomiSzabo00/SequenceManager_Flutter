@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'edit_employee_viewmodel.dart';
 
 class EditEmployeeScreen extends StatefulWidget {
   const EditEmployeeScreen({super.key});
@@ -8,18 +11,13 @@ class EditEmployeeScreen extends StatefulWidget {
 }
 
 class _EditEmployeeScreenState extends State<EditEmployeeScreen> {
-  String? selectedOption1; // Initially selected option for the first dropdown
-  String? selectedOption2; // Initially selected option for the second dropdown
-  String name = '';
-
-  List<String> options1 = ['Option 1', 'Option 2', 'Option 3', 'Option 4'];
-  List<String> options2 = ['Option A', 'Option B', 'Option C', 'Option D'];
 
   @override
   Widget build(BuildContext context) {
+    final viewModel = context.watch<EditEmployeeViewModel>();
     return Scaffold(
       appBar: AppBar(
-        title: const Text("New employee"),
+        title: const Text("Edit employee"),
       ),
       body: Center(
         child: FractionallySizedBox(
@@ -32,23 +30,20 @@ class _EditEmployeeScreenState extends State<EditEmployeeScreen> {
                   labelText: 'Name',
                 ),
                 onChanged: (value) {
-                  setState(() {
-                    name = value;
-                  });
+                  viewModel.setName(value);
                 },
+
               ),
               const SizedBox(height: 20),
               DropdownButtonFormField<String>(
                 decoration: const InputDecoration(
                   labelText: 'Location',
                 ),
-                value: selectedOption1,
+                value: viewModel.getLocation,
                 onChanged: (String? newValue) {
-                  setState(() {
-                    selectedOption1 = newValue;
-                  });
+                  viewModel.setCategory(newValue);
                 },
-                items: options1.map<DropdownMenuItem<String>>((String option) {
+                items: viewModel.getLocations().map<DropdownMenuItem<String>>((String option) {
                   return DropdownMenuItem<String>(
                     value: option,
                     child: Text(option),
@@ -60,13 +55,11 @@ class _EditEmployeeScreenState extends State<EditEmployeeScreen> {
                 decoration: const InputDecoration(
                   labelText: 'Category',
                 ),
-                value: selectedOption2,
+                value: viewModel.getCategory,
                 onChanged: (String? newValue) {
-                  setState(() {
-                    selectedOption2 = newValue;
-                  });
+                  viewModel.setCategory(newValue);
                 },
-                items: options2.map<DropdownMenuItem<String>>((String option) {
+                items: viewModel.getCategories().map<DropdownMenuItem<String>>((String option) {
                   return DropdownMenuItem<String>(
                     value: option,
                     child: Text(option),
@@ -76,7 +69,7 @@ class _EditEmployeeScreenState extends State<EditEmployeeScreen> {
               const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
-                  // Handle the submit button press
+                  viewModel.save();
                 },
                 child: const Text("Save"),
               ),

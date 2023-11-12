@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:sequence_manager/screens/user/user_waiting_viewmodel.dart';
 
 class UserWaitingScreen extends StatelessWidget {
-  final int yourNumber=100;
-  final int peopleAhead=1;
-  final String place="T-com";
 
   const UserWaitingScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final viewModel = context.watch<UserWaitingViewModel>();
     return Scaffold(
       appBar: AppBar(
-        title:const Text("Sorban áll"),
+        title:const Text("Stand in line"),
       ),
       body: Center(
         child: Column(
@@ -19,20 +19,20 @@ class UserWaitingScreen extends StatelessWidget {
           children: <Widget>[
             const Text("Your number:"),
             Text(
-              yourNumber.toString(),
+              viewModel.getNumber.toString(),
               style: const TextStyle(fontSize: 50),
             ),
             Text(
-              peopleAhead == 1
-                  ? "1 person is ahead of you"
-                  : "$peopleAhead people are ahead of you",
+              viewModel.getPeopleAhead <= 0
+                  ? "Go to the counter"
+                  : "${viewModel.getPeopleAhead} people are ahead of you",
               style: const TextStyle(fontSize: 16),
             ),
             const Padding(
               padding: EdgeInsets.only(top: 30),
             ),
             Text(
-              place,
+              viewModel.getPlace,
               style: const TextStyle(fontSize: 16),
             ),
             FractionallySizedBox(
@@ -41,9 +41,9 @@ class UserWaitingScreen extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(vertical: 10.0),
                 child: ElevatedButton(
                   onPressed: () {
-                    // Handle button 1 press
+                    viewModel.delete();
                   },
-                  child: const Text("Törlés"),
+                  child: const Text("Delete"),
                 ),
               ),
             ),

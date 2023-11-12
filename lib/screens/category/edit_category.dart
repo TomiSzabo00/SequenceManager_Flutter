@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'edit_category_viewmodel.dart';
 
 class EditCategoryScreen extends StatelessWidget {
   final TextEditingController textController = TextEditingController();
@@ -8,6 +11,7 @@ class EditCategoryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final viewModel = context.watch<EditCategoryViewModel>();
     return Scaffold(
       appBar: AppBar(
         title: const Text("Edit category"),
@@ -21,16 +25,14 @@ class EditCategoryScreen extends StatelessWidget {
               TextField(
                 controller: textController,
                 decoration: InputDecoration(
-                  labelText: "New name of $name",
+                  labelText: "New name of ${viewModel.getName}",
                 ),
               ),
               const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
-                  // Handle the submit button press here
-                  String enteredText = textController.text;
-                  print('You entered: $enteredText');
-                  // You can process the entered text here
+                  viewModel.setName(textController.text);
+                  //TODO: Átirányítás
                 },
                 child: const Text("Save"),
               ),

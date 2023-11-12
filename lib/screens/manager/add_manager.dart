@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'add_manager_viewmodel.dart';
 
 class AddManagerScreen extends StatelessWidget {
   final TextEditingController textController = TextEditingController();
-  final String place='T-com';
+
   AddManagerScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final viewModel = context.watch<AddManagerViewModel>();
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Manager"),
+        title: const Text("Add new manager"),
       ),
       body: Center(
         child: Padding(
@@ -17,23 +21,19 @@ class AddManagerScreen extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Text(
-                "Add manager to $place",
-                style: const TextStyle(fontSize: 16),
-              ),
               TextField(
                 controller: textController,
-                decoration: const InputDecoration(
-                  labelText: 'Enter some text',
+                decoration: InputDecoration(
+                  labelText: "Add manager to ${viewModel.getPlace}",
                 ),
+                onChanged: (value) {
+                  viewModel.setName(value);
+                },
               ),
               const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
-                  // Handle the submit button press here
-                  String enteredText = textController.text;
-                  print('You entered: $enteredText');
-                  // You can process the entered text here
+                  viewModel.save();
                 },
                 child: const Text("Submit"),
               ),

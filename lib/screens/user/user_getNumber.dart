@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:sequence_manager/screens/user/user_getNumber_viewmodel.dart';
 
 class UserGetNumberScreen extends StatefulWidget {
   const UserGetNumberScreen({super.key});
@@ -8,17 +10,13 @@ class UserGetNumberScreen extends StatefulWidget {
 }
 
 class _UserGetNumberScreenState extends State<UserGetNumberScreen> {
-  String? selectedOption1; // Initially selected option for the first dropdown
-  String? selectedOption2; // Initially selected option for the second dropdown
-
-  List<String> options1 = ['Option 1', 'Option 2', 'Option 3', 'Option 4'];
-  List<String> options2 = ['Option A', 'Option B', 'Option C', 'Option D'];
 
   @override
   Widget build(BuildContext context) {
+    final viewModel = context.watch<UserGetNumberViewModel>();
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Sorszám kérés"),
+        title: const Text("Get number"),
       ),
       body: Center(
         child: FractionallySizedBox(
@@ -26,49 +24,45 @@ class _UserGetNumberScreenState extends State<UserGetNumberScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              FractionallySizedBox(
-                widthFactor: 1.0, // Occupy full available width
-                child: DropdownButton<String>(
-                  value: selectedOption1,
-                  onChanged: (String? newValue) {
-                    setState(() {
-                      selectedOption1 = newValue;
-                    });
-                  },
-                  items: options1.map<DropdownMenuItem<String>>((String option) {
-                    return DropdownMenuItem<String>(
-                      value: option,
-                      child: Text(option),
-                    );
-                  }).toList(),
+              DropdownButtonFormField<String>(
+                decoration: const InputDecoration(
+                  labelText: 'Location',
                 ),
+                value: viewModel.getPlace,
+                onChanged: (String? newValue) {
+                  viewModel.setPlace(newValue);
+                },
+                items: viewModel.getPlaces().map<DropdownMenuItem<String>>((String option) {
+                  return DropdownMenuItem<String>(
+                    value: option,
+                    child: Text(option),
+                  );
+                }).toList(),
               ),
               const SizedBox(height: 20),
-              FractionallySizedBox(
-                widthFactor: 1.0, // Occupy full available width
-                child: DropdownButton<String>(
-                  value: selectedOption2,
-                  onChanged: (String? newValue) {
-                    setState(() {
-                      selectedOption2 = newValue;
-                    });
-                  },
-                  items: options2.map<DropdownMenuItem<String>>((String option) {
-                    return DropdownMenuItem<String>(
-                      value: option,
-                      child: Text(option),
-                    );
-                  }).toList(),
+              DropdownButtonFormField<String>(
+                decoration: const InputDecoration(
+                  labelText: 'Category',
                 ),
+                value: viewModel.getCategory,
+                onChanged: (String? newValue) {
+                  viewModel.setCategory(newValue);
+                },
+                items: viewModel.getCategories().map<DropdownMenuItem<String>>((String option) {
+                  return DropdownMenuItem<String>(
+                    value: option,
+                    child: Text(option),
+                  );
+                }).toList(),
               ),
               const SizedBox(height: 20),
               FractionallySizedBox(
                 widthFactor: 1.0, // Occupy full available width
                 child: ElevatedButton(
                   onPressed: () {
-                    // Handle the submit button press
+                    viewModel.getNumber();
                   },
-                  child: Text("Sorszám kérése"),
+                  child: const Text("Stand into line"),
                 ),
               ),
             ],

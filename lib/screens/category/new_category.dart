@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'new_category_viewmodel.dart';
 
 class NewCategoryScreen extends StatelessWidget {
   final TextEditingController textController = TextEditingController();
-  final String name='T-com';
+  final String name="";
 
   NewCategoryScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final viewModel = context.watch<NewCategoryViewModel>();
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Edit category"),
+        title: const Text("Add new category"),
       ),
       body: Center(
         child: Padding(
@@ -20,17 +24,15 @@ class NewCategoryScreen extends StatelessWidget {
             children: <Widget>[
               TextField(
                 controller: textController,
-                decoration: InputDecoration(
-                  labelText: "New name of $name",
+                decoration: const InputDecoration(
+                  labelText: "Category name",
                 ),
               ),
               const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
-                  // Handle the submit button press here
-                  String enteredText = textController.text;
-                  print('You entered: $enteredText');
-                  // You can process the entered text here
+                  viewModel.setName(textController.text);
+                  //TODO: redirect
                 },
                 child: const Text("Save"),
               ),
