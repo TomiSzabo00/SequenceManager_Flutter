@@ -3,7 +3,7 @@ import 'package:sequence_manager/models/user.dart';
 
 class AuthViewModel extends ChangeNotifier {
   bool isLogin = true;
-  User? loggedInUser = null;
+  User? loggedInUser;
 
   void setLogin(bool value) {
     isLogin = value;
