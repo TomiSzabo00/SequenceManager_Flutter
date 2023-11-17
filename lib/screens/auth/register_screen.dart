@@ -3,30 +3,42 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:sequence_manager/screens/auth/auth_viewmodel.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+class Registercreen extends StatefulWidget {
+  const Registercreen({Key? key}) : super(key: key);
 
   static const routeName = '/login';
 
   @override
-  State<LoginScreen> createState() => LoginScreenState();
+  State<Registercreen> createState() => RegistercreenState();
 }
 
-class LoginScreenState extends State<LoginScreen> {
+class RegistercreenState extends State<Registercreen> {
   @override
   Widget build(BuildContext context) {
     final viewModel = context.watch<AuthViewModel>();
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
+      appBar: AppBar(
+        title: const Text("Register"),
+        leading: IconButton(
+          onPressed: () {
+            viewModel.setLogin(true);
+          },
+          icon: const Icon(Icons.arrow_back),
+        ),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: SingleChildScrollView(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              SizedBox(height: MediaQuery.of(context).size.height * 0.15),
-              SizedBox(
-                width: MediaQuery.of(context).size.width * 0.8,
-                child: Image.asset("lib/assets/logo.jpg"),
+              TextField(
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Name',
+                ),
+                keyboardType: TextInputType.name,
+                onChanged: (value) {},
               ),
               const SizedBox(height: 20),
               TextField(
@@ -47,25 +59,21 @@ class LoginScreenState extends State<LoginScreen> {
                 onChanged: (value) {},
               ),
               const SizedBox(height: 20),
+              TextField(
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Confirm Password',
+                ),
+                obscureText: true,
+                onChanged: (value) {},
+              ),
+              const SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   ElevatedButton(
                     onPressed: () {
                       viewModel.mockLogin();
-                    },
-                    child: const Text("Login"),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text("Don't have an account?"),
-                  TextButton(
-                    onPressed: () {
-                      viewModel.setLogin(false);
                     },
                     child: const Text("Register"),
                   ),
