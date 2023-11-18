@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sequence_manager/helpers/api.dart';
 import 'package:sequence_manager/models/user.dart';
 
 class AuthViewModel extends ChangeNotifier {
@@ -30,7 +31,7 @@ class AuthViewModel extends ChangeNotifier {
     yield loggedInUser;
   }
 
-  void login() {
+  void login() async {
     // check if email and password is valid
     if (!RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
       .hasMatch(emailController.text)) {
@@ -44,7 +45,10 @@ class AuthViewModel extends ChangeNotifier {
       return;
     }
 
-    loggedInUser = User(name: "Test", email: "email@emial.com");
+    final user = await API.login(emailController.text, passwordController.text);
+    loggedInUser = user;
+
+    // loggedInUser = User(name: "Test", email: "email@emial.com");
     notifyListeners();
   }
 
