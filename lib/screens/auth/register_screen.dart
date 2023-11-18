@@ -32,39 +32,63 @@ class RegistercreenState extends State<Registercreen> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               TextField(
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
+                controller: viewModel.nameController,
+                decoration: InputDecoration(
+                  border: const OutlineInputBorder(),
                   labelText: 'Name',
+                  errorText:
+                      viewModel.isNameValid ? null : "Please enter a name",
                 ),
                 keyboardType: TextInputType.name,
-                onChanged: (value) {},
+                onChanged: (value) {
+                  viewModel.isNameValid = true;
+                },
               ),
               const SizedBox(height: 20),
               TextField(
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
+                controller: viewModel.emailController,
+                decoration: InputDecoration(
+                  border: const OutlineInputBorder(),
                   labelText: 'Email',
+                  errorText: viewModel.isEmailValid
+                      ? null
+                      : "Please enter a valid email",
                 ),
                 keyboardType: TextInputType.emailAddress,
-                onChanged: (value) {},
+                onChanged: (value) {
+                  viewModel.isEmailValid = true;
+                },
               ),
               const SizedBox(height: 20),
               TextField(
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
+                controller: viewModel.passwordController,
+                decoration: InputDecoration(
+                  border: const OutlineInputBorder(),
                   labelText: 'Password',
+                  errorText: viewModel.isPasswordValid
+                      ? null
+                      : "Please enter a password",
                 ),
                 obscureText: true,
-                onChanged: (value) {},
+                onChanged: (value) {
+                  viewModel.isPasswordValid = true;
+                  viewModel.isPasswordAgainValid = true;
+                },
               ),
               const SizedBox(height: 20),
               TextField(
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
+                controller: viewModel.passwordAgainController,
+                decoration: InputDecoration(
+                  border: const OutlineInputBorder(),
                   labelText: 'Confirm Password',
+                  errorText: viewModel.isPasswordAgainValid
+                      ? null
+                      : "Passwords do not match",
                 ),
                 obscureText: true,
-                onChanged: (value) {},
+                onChanged: (value) {
+                  viewModel.isPasswordAgainValid = true;
+                },
               ),
               const SizedBox(height: 20),
               Row(
@@ -72,7 +96,7 @@ class RegistercreenState extends State<Registercreen> {
                 children: [
                   ElevatedButton(
                     onPressed: () {
-                      viewModel.mockLogin();
+                      viewModel.register();
                     },
                     child: const Text("Register"),
                   ),

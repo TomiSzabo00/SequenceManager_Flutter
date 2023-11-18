@@ -29,21 +29,33 @@ class LoginScreenState extends State<LoginScreen> {
               ),
               const SizedBox(height: 20),
               TextField(
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
+                controller: viewModel.emailController,
+                decoration: InputDecoration(
+                  border: const OutlineInputBorder(),
                   labelText: 'Email',
+                  errorText: viewModel.isEmailValid
+                      ? null
+                      : "Please enter a valid email",
                 ),
                 keyboardType: TextInputType.emailAddress,
-                onChanged: (value) {},
+                onChanged: (value) {
+                  viewModel.isEmailValid = true;
+                },
               ),
               const SizedBox(height: 20),
               TextField(
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
+                controller: viewModel.passwordController,
+                decoration: InputDecoration(
+                  border: const OutlineInputBorder(),
                   labelText: 'Password',
+                  errorText: viewModel.isPasswordValid
+                      ? null
+                      : "Please enter a password",
                 ),
                 obscureText: true,
-                onChanged: (value) {},
+                onChanged: (value) {
+                  viewModel.isPasswordValid = true;
+                },
               ),
               const SizedBox(height: 20),
               Row(
@@ -51,7 +63,7 @@ class LoginScreenState extends State<LoginScreen> {
                 children: [
                   ElevatedButton(
                     onPressed: () {
-                      viewModel.mockLogin();
+                      viewModel.login();
                     },
                     child: const Text("Login"),
                   ),
