@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:sequence_manager/helpers/api.dart';
 import 'package:sequence_manager/models/user.dart';
+import 'package:sequence_manager/screens/global/alert_viewmodel.dart';
 
-class AuthViewModel extends ChangeNotifier {
+class AuthViewModel extends AlertViewModel {
   bool isLogin = true;
   User? loggedInUser;
 
@@ -33,8 +34,9 @@ class AuthViewModel extends ChangeNotifier {
 
   void login() async {
     // check if email and password is valid
-    if (!RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-      .hasMatch(emailController.text)) {
+    if (!RegExp(
+            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+        .hasMatch(emailController.text)) {
       isEmailValid = false;
       notifyListeners();
       return;
@@ -45,10 +47,13 @@ class AuthViewModel extends ChangeNotifier {
       return;
     }
 
-    final user = await API.login(emailController.text, passwordController.text);
-    loggedInUser = user;
-
-    // loggedInUser = User(name: "Test", email: "email@emial.com");
+    try {
+      final user =
+          await API.login(emailController.text, passwordController.text);
+      loggedInUser = user;
+    } catch (e) {
+      alertMessage = e.toString();
+    }
     notifyListeners();
   }
 
@@ -59,8 +64,9 @@ class AuthViewModel extends ChangeNotifier {
       notifyListeners();
       return;
     }
-    if (!RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-      .hasMatch(emailController.text)) {
+    if (!RegExp(
+            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+        .hasMatch(emailController.text)) {
       isEmailValid = false;
       notifyListeners();
       return;

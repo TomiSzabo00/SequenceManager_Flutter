@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:sequence_manager/screens/auth/auth_viewmodel.dart';
 import 'package:sequence_manager/screens/auth/login_screen.dart';
 import 'package:sequence_manager/screens/auth/register_screen.dart';
+import 'package:sequence_manager/screens/global/alert_wrapper.dart';
 
 class AuthManager extends StatefulWidget {
   const AuthManager({Key? key}) : super(key: key);
@@ -23,19 +24,22 @@ class AuthManagerState extends State<AuthManager> {
     final viewModel = context.watch<AuthViewModel>();
     return Scaffold(
       body: Center(
-        child: StreamBuilder(
-          stream: viewModel.listenToLoginState(),
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              return const Text("User is logged in");
-            } else {
-              if (viewModel.isLogin) {
-                return const LoginScreen();
+        child: AlertWrapper<AuthViewModel>(
+          viewModel: viewModel,
+          builder: (context, _) => StreamBuilder(
+            stream: viewModel.listenToLoginState(),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return const Text("User is logged in");
               } else {
-                return const Registercreen();
+                if (viewModel.isLogin) {
+                  return const LoginScreen();
+                } else {
+                  return const Registercreen();
+                }
               }
-            }
-          },
+            },
+          ),
         ),
       ),
     );
