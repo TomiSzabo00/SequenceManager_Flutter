@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sequence_manager/models/user.dart';
 import 'package:sequence_manager/screens/auth/auth_viewmodel.dart';
 import 'package:sequence_manager/screens/auth/login_screen.dart';
 import 'package:sequence_manager/screens/auth/register_screen.dart';
+import 'package:sequence_manager/screens/employee/employee.dart';
 import 'package:sequence_manager/screens/global/alert_wrapper.dart';
+import 'package:sequence_manager/screens/menu/edit_menu.dart';
+import 'package:sequence_manager/screens/menu/user_menu.dart';
+import 'package:sequence_manager/screens/user/user_getNumber.dart';
 
 class AuthManager extends StatefulWidget {
   const AuthManager({Key? key}) : super(key: key);
@@ -30,7 +35,17 @@ class AuthManagerState extends State<AuthManager> {
             stream: viewModel.listenToLoginState(),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
-                return const Text("User is logged in");
+                final user = snapshot.data!;
+                switch (user.type) {
+                  case UserType.admin:
+                    return EditMenu();
+                  case UserType.manager:
+                    return UserMenu();
+                  case UserType.user:
+                    return const UserGetNumberScreen();
+                  case UserType.worker:
+                    return const WorkerScreen();
+                }
               } else {
                 if (viewModel.isLogin) {
                   return const LoginScreen();
