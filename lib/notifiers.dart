@@ -1,4 +1,5 @@
 import 'package:provider/provider.dart';
+import 'package:sequence_manager/screens/admin/admin_viewmodel.dart';
 import 'package:sequence_manager/screens/auth/auth_viewmodel.dart';
 
 import 'package:sequence_manager/screens/category/edit_category_viewmodel.dart';
@@ -24,4 +25,5 @@ var providers = [
   ChangeNotifierProvider<UserGetNumberViewModel>(create: (_) => UserGetNumberViewModel()),
   ChangeNotifierProvider<UserWaitingViewModel>(create: (_) => UserWaitingViewModel()),
   ChangeNotifierProvider<AuthViewModel>(create: (_) => AuthViewModel()),
+  ChangeNotifierProvider<AdminViewModel>(create: (_) => AdminViewModel()),
   ];

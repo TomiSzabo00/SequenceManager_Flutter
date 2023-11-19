@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:sequence_manager/models/list_item.dart';
 import 'package:sequence_manager/screens/global/list_viewmodel.dart';
 
 class AdminViewModel extends ListViewModel {
@@ -17,4 +17,13 @@ class AdminViewModel extends ListViewModel {
     // TODO: implement updateItem
   }
 
+  @override
+  Future<List<ListItem>> fetchItems() {
+    final mockList = [
+      ListItem(title: "Comp 1", subtitle: ""),
+      ListItem(title: "Comp 2", subtitle: ""),
+      ListItem(title: "Comp 3", subtitle: ""),
+    ];
+    return Future.value(mockList);
+  }
 }

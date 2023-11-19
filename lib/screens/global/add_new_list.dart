@@ -33,18 +33,33 @@ class AddNewListState extends State<AddNewList> {
                 ],
               ),
               Expanded(
-                child: ListView.builder(
-                  itemCount: widget.viewModel.items.length,
-                  itemBuilder: (context, index) {
-                    return ListTile(
-                      title: Text(widget.viewModel.items[index].toString()),
-                      trailing: IconButton(
-                        onPressed: () {
-                          showMoreMenu();
+                child: FutureBuilder(
+                  future: widget.viewModel.fetchItems(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      return ListView.builder(
+                        itemCount: snapshot.data!.length,
+                        itemBuilder: (context, index) {
+                          return ListTile(
+                            title: Text(snapshot.data![index].title),
+                            subtitle: snapshot.data![index].subtitle.isEmpty
+                                ? null
+                                : Text(snapshot.data![index].subtitle),
+                            trailing: IconButton(
+                              onPressed: () {
+                                showMoreMenu();
+                              },
+                              icon: const Icon(Icons.more_horiz),
+                            ),
+                            contentPadding: const EdgeInsets.all(0),
+                          );
                         },
-                        icon: const Icon(Icons.more_horiz),
-                      ),
-                    );
+                      );
+                    } else {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
                   },
                 ),
               ),
