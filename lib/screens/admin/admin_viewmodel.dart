@@ -20,9 +20,9 @@ class AdminViewModel extends ListViewModel {
   @override
   Future<List<ListItem>> fetchItems() {
     final mockList = [
-      ListItem(title: "Comp 1", subtitle: ""),
-      ListItem(title: "Comp 2", subtitle: ""),
-      ListItem(title: "Comp 3", subtitle: ""),
+      ListItem(title: "Comp 1"),
+      ListItem(title: "Comp 2"),
+      ListItem(title: "Comp 3"),
     ];
     return Future.value(mockList);
   }

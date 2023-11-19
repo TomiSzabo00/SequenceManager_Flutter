@@ -4,6 +4,6 @@ class ListItem {
 
   ListItem({
     required this.title,
-    required this.subtitle,
+    this.subtitle = "",
   });
 }
