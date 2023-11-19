@@ -9,7 +9,7 @@ class ManageUsersScreen extends StatefulWidget {
 }
 
 class ManageUsersScreenState extends State<ManageUsersScreen> {
-  TextEditingController _emailController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
   UserType _category = UserType.worker;
 
   @override
