@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sequence_manager/models/user.dart';
+import 'package:sequence_manager/screens/admin/companies_list.dart';
 
 class AdminMenu extends StatelessWidget {
   const AdminMenu({super.key, required this.user});
@@ -31,7 +32,11 @@ class AdminMenu extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(vertical: 10.0),
                 child: ElevatedButton(
                   onPressed: () {
-                    // Handle button 1 press
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => const CompaniesList(),
+                      ),
+                    );
                   },
                   child: const Text("Companies"),
                 ),
