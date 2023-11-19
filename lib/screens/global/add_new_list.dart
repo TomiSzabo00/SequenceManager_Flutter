@@ -1,15 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:sequence_manager/screens/global/list_viewmodel.dart';
+import 'package:sequence_manager/models/list_item.dart';
 
+// ignore: must_be_immutable
 class AddNewList extends StatefulWidget {
-  const AddNewList({
+  AddNewList({
     Key? key,
     required this.title,
-    required this.viewModel,
+    required this.fetchItems,
+    required this.updateItem,
+    required this.deleteItem,
   }) : super(key: key);
 
   final String title;
-  final ListViewModel viewModel;
+  Future<List<ListItem>> fetchItems;
+  Function(ListItem) updateItem;
+  Function(ListItem) deleteItem;
 
   @override
   AddNewListState createState() => AddNewListState();
@@ -34,23 +39,24 @@ class AddNewListState extends State<AddNewList> {
               ),
               Expanded(
                 child: FutureBuilder(
-                  future: widget.viewModel.fetchItems(),
+                  future: widget.fetchItems,
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
+                      final data = snapshot.data!;
                       return ListView.builder(
-                        itemCount: snapshot.data!.length,
+                        itemCount: data.length,
                         itemBuilder: (context, index) {
                           return ListTile(
-                            title: Text(snapshot.data![index].title),
-                            subtitle: snapshot.data![index].subtitle.isEmpty
+                            title: Text(data[index].title),
+                            subtitle: data[index].subtitle.isEmpty
                                 ? null
-                                : Text(snapshot.data![index].subtitle),
+                                : Text(data[index].subtitle),
                             trailing: PopupMenuButton(
                               onSelected: (value) {
                                 if (value == "update") {
-                                  widget.viewModel.updateItem();
+                                  widget.updateItem(data[index]);
                                 } else if (value == "delete") {
-                                  widget.viewModel.deleteItem();
+                                  widget.deleteItem(data[index]);
                                 }
                               },
                               itemBuilder: (context) {
