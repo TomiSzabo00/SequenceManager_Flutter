@@ -1,11 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:sequence_manager/models/user.dart';
 
-class EditMenu extends StatelessWidget {
+class AdminMenu extends StatelessWidget {
+  const AdminMenu({super.key, required this.user});
+  final User user;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Hello, User"),
+        actions: [
+          TextButton(
+            onPressed: () {
+              // Handle profile
+            },
+            child: Text(
+              "Hello, ${user.firstname}",
+              style: const TextStyle(color: Colors.white),
+            ),
+          ),
+        ],
       ),
       body: Center(
         child: Column(

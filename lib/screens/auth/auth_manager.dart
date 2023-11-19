@@ -6,7 +6,7 @@ import 'package:sequence_manager/screens/auth/login_screen.dart';
 import 'package:sequence_manager/screens/auth/register_screen.dart';
 import 'package:sequence_manager/screens/employee/employee.dart';
 import 'package:sequence_manager/screens/global/alert_wrapper.dart';
-import 'package:sequence_manager/screens/menu/edit_menu.dart';
+import 'package:sequence_manager/screens/admin/edit_menu.dart';
 import 'package:sequence_manager/screens/menu/user_menu.dart';
 import 'package:sequence_manager/screens/user/user_getNumber.dart';
 
@@ -38,7 +38,7 @@ class AuthManagerState extends State<AuthManager> {
                 final user = snapshot.data!;
                 switch (user.type) {
                   case UserType.admin:
-                    return EditMenu();
+                    return AdminMenu(user: viewModel.loggedInUser!);
                   case UserType.manager:
                     return UserMenu();
                   case UserType.user:

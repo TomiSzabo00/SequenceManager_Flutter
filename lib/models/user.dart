@@ -16,6 +16,10 @@ class User {
       type: UserType.fromString(json["role"]),
     );
   }
+
+  String get firstname {
+    return name.split(" ")[0];
+  }
 }
 
 enum UserType {
