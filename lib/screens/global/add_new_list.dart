@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sequence_manager/models/list_item.dart';
+import 'package:sequence_manager/models/list/list_item.dart';
 
 // ignore: must_be_immutable
 class AddNewList extends StatefulWidget {

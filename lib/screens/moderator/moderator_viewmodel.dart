@@ -1,4 +1,4 @@
-import 'package:sequence_manager/models/list_item.dart';
+import 'package:sequence_manager/models/list/list_item.dart';
 import 'package:sequence_manager/screens/global/list_viewmodel.dart';
 
 class ModeratorViewModel extends ListViewModel {

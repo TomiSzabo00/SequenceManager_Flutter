@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sequence_manager/models/list_item.dart';
+import 'package:sequence_manager/models/list/list_item.dart';
 import 'package:sequence_manager/screens/global/add_new_list.dart';
 import 'package:sequence_manager/screens/moderator/moderator_viewmodel.dart';
 
