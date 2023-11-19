@@ -42,4 +42,19 @@ enum UserType {
         return UserType.user;
     }
   }
+
+  String get name {
+    switch (this) {
+      case UserType.user:
+        return "Customer";
+      case UserType.worker:
+        return "Employee";
+      case UserType.manager:
+        return "Company manager";
+      case UserType.admin:
+        return "Admin";
+      default:
+        return "CUSTOMER";
+    }
+  }
 }
