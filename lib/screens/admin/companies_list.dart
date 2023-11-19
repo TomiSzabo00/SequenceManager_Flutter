@@ -4,8 +4,8 @@ import 'package:sequence_manager/models/list/company_list_item.dart';
 import 'package:sequence_manager/models/list/list_item.dart';
 import 'package:sequence_manager/screens/admin/admin_viewmodel.dart';
 import 'package:sequence_manager/screens/global/add_new_list.dart';
-import 'package:sequence_manager/screens/moderator/edit_company.dart';
-import 'package:sequence_manager/screens/moderator/new_company.dart';
+import 'package:sequence_manager/screens/admin/edit_company.dart';
+import 'package:sequence_manager/screens/admin/new_company.dart';
 
 class CompaniesList extends StatefulWidget {
   const CompaniesList({Key? key}) : super(key: key);
