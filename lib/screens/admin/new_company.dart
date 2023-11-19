@@ -1,0 +1,99 @@
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:sequence_manager/screens/admin/admin_viewmodel.dart';
+import 'package:sequence_manager/screens/manager/add_manager.dart';
+
+class NewCompanyScreen extends StatefulWidget {
+  const NewCompanyScreen({Key? key}) : super(key: key);
+
+  @override
+  NewCompanyScreenState createState() => NewCompanyScreenState();
+}
+
+class NewCompanyScreenState extends State<NewCompanyScreen> {
+  @override
+  Widget build(BuildContext context) {
+    final viewModel = context.watch<AdminViewModel>();
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Add new company"),
+      ),
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              TextField(
+                controller: viewModel.nameController,
+                decoration: InputDecoration(
+                  border: const OutlineInputBorder(),
+                  labelText: 'Name',
+                  errorText: viewModel.isNameValid ? null : 'Name is required',
+                ),
+                onChanged: (value) => viewModel.validateName(),
+              ),
+              const SizedBox(height: 60),
+              const Align(
+                alignment: Alignment.centerLeft,
+                child: Text("Managers:", style: TextStyle(fontSize: 16)),
+              ),
+              Expanded(child: () {
+                if (viewModel.managers.isEmpty) {
+                  return const Center(
+                    child: Text("No managers added yet."),
+                  );
+                } else {
+                  return ListView.builder(
+                    itemCount: viewModel.managers.length,
+                    itemBuilder: (context, index) {
+                      final manager = viewModel.managers[index];
+                      return ListTile(
+                        title: Text(manager.title),
+                        subtitle: Text(manager.subtitle),
+                        trailing: IconButton(
+                          onPressed: () {
+                            // Handle delete manager
+                          },
+                          icon: const Icon(Icons.delete),
+                        ),
+                        contentPadding: const EdgeInsets.all(0),
+                      );
+                    },
+                  );
+                }
+              }()),
+              const SizedBox(height: 20),
+              SizedBox(
+                width: double.infinity,
+                height: 50,
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => AddManagerScreen(),
+                      ),
+                    );
+                  },
+                  child: const Text("Add new manager"),
+                ),
+              ),
+              const SizedBox(height: 20),
+              SizedBox(
+                width: double.infinity,
+                height: 50,
+                child: ElevatedButton(
+                  onPressed: () {
+                    // Handle add manager
+                  },
+                  child: const Text("Done"),
+                ),
+              ),
+              const SizedBox(height: 20),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}

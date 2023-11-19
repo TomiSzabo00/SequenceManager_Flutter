@@ -1,0 +1,40 @@
+import 'dart:convert';
+import 'package:sequence_manager/models/user.dart';
+import 'package:http/http.dart' as http;
+// Uncomment for debug prints
+// import 'package:pretty_http_logger/pretty_http_logger.dart';
+
+class API {
+  static const String _baseURL = "http://localhost.proxyman.io:8080";
+  static String get baseURL => _baseURL;
+  static Map<String, String> get header => {
+        "Content-Type": "application/json",
+      };
+
+  static Future<User> login(String email, String password) async {
+    // Uncomment for debug prints
+    // HttpWithMiddleware http = HttpWithMiddleware.build(middlewares: [
+    //   HttpLogger(logLevel: LogLevel.BODY),
+    // ]);
+
+    final url = Uri.parse("$_baseURL/api/auth/login");
+    final body = {
+      "email": email,
+      "password": password,
+    };
+
+    final response =
+        await http.post(url, body: jsonEncode(body), headers: header);
+
+    if (response.statusCode == 200) {
+      return User.fromJson(jsonDecode(response.body) as Map<String, dynamic>);
+    } else {
+      throw errorMessageFromResponse(response.body);
+    }
+  }
+
+  static String errorMessageFromResponse(String response) {
+    final json = jsonDecode(response) as Map<String, dynamic>;
+    return json["errorType"];
+  }
+}

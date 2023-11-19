@@ -2,30 +2,47 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sequence_manager/screens/auth/auth_viewmodel.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+class Registercreen extends StatefulWidget {
+  const Registercreen({Key? key}) : super(key: key);
 
   static const routeName = '/login';
 
   @override
-  State<LoginScreen> createState() => LoginScreenState();
+  State<Registercreen> createState() => RegistercreenState();
 }
 
-class LoginScreenState extends State<LoginScreen> {
+class RegistercreenState extends State<Registercreen> {
   @override
   Widget build(BuildContext context) {
     final viewModel = context.watch<AuthViewModel>();
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
+      appBar: AppBar(
+        title: const Text("Register"),
+        leading: IconButton(
+          onPressed: () {
+            viewModel.setLogin(true);
+          },
+          icon: const Icon(Icons.arrow_back),
+        ),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: SingleChildScrollView(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              SizedBox(height: MediaQuery.of(context).size.height * 0.15),
-              SizedBox(
-                width: MediaQuery.of(context).size.width * 0.8,
-                child: Image.asset("lib/assets/logo.jpg"),
+              TextField(
+                controller: viewModel.nameController,
+                decoration: InputDecoration(
+                  border: const OutlineInputBorder(),
+                  labelText: 'Name',
+                  errorText:
+                      viewModel.isNameValid ? null : "Please enter a name",
+                ),
+                keyboardType: TextInputType.name,
+                onChanged: (value) {
+                  viewModel.isNameValid = true;
+                },
               ),
               const SizedBox(height: 20),
               TextField(
@@ -55,6 +72,22 @@ class LoginScreenState extends State<LoginScreen> {
                 obscureText: true,
                 onChanged: (value) {
                   viewModel.isPasswordValid = true;
+                  viewModel.isPasswordAgainValid = true;
+                },
+              ),
+              const SizedBox(height: 20),
+              TextField(
+                controller: viewModel.passwordAgainController,
+                decoration: InputDecoration(
+                  border: const OutlineInputBorder(),
+                  labelText: 'Confirm Password',
+                  errorText: viewModel.isPasswordAgainValid
+                      ? null
+                      : "Passwords do not match",
+                ),
+                obscureText: true,
+                onChanged: (value) {
+                  viewModel.isPasswordAgainValid = true;
                 },
               ),
               const SizedBox(height: 20),
@@ -63,20 +96,7 @@ class LoginScreenState extends State<LoginScreen> {
                 children: [
                   ElevatedButton(
                     onPressed: () {
-                      viewModel.login();
-                    },
-                    child: const Text("Login"),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text("Don't have an account?"),
-                  TextButton(
-                    onPressed: () {
-                      viewModel.setLogin(false);
+                      viewModel.register();
                     },
                     child: const Text("Register"),
                   ),

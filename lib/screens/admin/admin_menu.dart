@@ -1,11 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:sequence_manager/models/user.dart';
+import 'package:sequence_manager/screens/admin/companies_list.dart';
+import 'package:sequence_manager/screens/admin/manage_users.dart';
 
-class EditMenu extends StatelessWidget {
+class AdminMenu extends StatelessWidget {
+  const AdminMenu({super.key, required this.user});
+  final User user;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Hello, User"),
+        actions: [
+          TextButton(
+            onPressed: () {
+              // Handle profile
+            },
+            child: Text(
+              "Hello, ${user.firstname}",
+              style: const TextStyle(color: Colors.white),
+            ),
+          ),
+        ],
       ),
       body: Center(
         child: Column(
@@ -17,7 +33,11 @@ class EditMenu extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(vertical: 10.0),
                 child: ElevatedButton(
                   onPressed: () {
-                    // Handle button 1 press
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => const CompaniesList(),
+                      ),
+                    );
                   },
                   child: const Text("Companies"),
                 ),
@@ -29,7 +49,11 @@ class EditMenu extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(vertical: 10.0),
                 child: ElevatedButton(
                   onPressed: () {
-                    // Handle button 2 press
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => const ManageUsersScreen(),
+                      ),
+                    );
                   },
                   child: const Text("Manage users"),
                 ),
