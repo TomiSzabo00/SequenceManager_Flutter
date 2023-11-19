@@ -29,6 +29,7 @@ class CategoriesListState extends State<CategoriesList> {
       fetchItems: fetchCategories,
       updateItem: viewModel.editCategory,
       deleteItem: viewModel.deleteCategory,
+      addNewItem: viewModel.addNewCategory,
     );
   }
 }

@@ -5,6 +5,7 @@ import 'package:sequence_manager/models/list/list_item.dart';
 import 'package:sequence_manager/screens/admin/admin_viewmodel.dart';
 import 'package:sequence_manager/screens/global/add_new_list.dart';
 import 'package:sequence_manager/screens/moderator/edit_company.dart';
+import 'package:sequence_manager/screens/moderator/new_company.dart';
 
 class CompaniesList extends StatefulWidget {
   const CompaniesList({Key? key}) : super(key: key);
@@ -15,11 +16,12 @@ class CompaniesList extends StatefulWidget {
 
 class CompaniesListState extends State<CompaniesList> {
   late Future<List<ListItem>> fetchCompanies;
-  
+
   @override
   void initState() {
     super.initState();
-    fetchCompanies = Provider.of<AdminViewModel>(context, listen: false).fetchCompanies();
+    fetchCompanies =
+        Provider.of<AdminViewModel>(context, listen: false).fetchCompanies();
   }
 
   @override
@@ -31,11 +33,19 @@ class CompaniesListState extends State<CompaniesList> {
       updateItem: (company) {
         Navigator.of(context).push(
           MaterialPageRoute(
-            builder: (context) => EditCompanyScreen(company: (company as CompanyListItem).company),
+            builder: (context) => EditCompanyScreen(
+                company: (company as CompanyListItem).company),
           ),
         );
       },
       deleteItem: viewModel.deleteCompany,
+      addNewItem: () {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => const NewCompanyScreen(),
+          ),
+        );
+      },
     );
   }
 }

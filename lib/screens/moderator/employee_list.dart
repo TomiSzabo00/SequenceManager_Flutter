@@ -29,6 +29,7 @@ class EmployeeListState extends State<EmployeeList> {
       fetchItems: fetchEmployees,
       updateItem: viewModel.editEmployee,
       deleteItem: viewModel.deleteEmployee,
+      addNewItem: viewModel.addNewEmployee,
     );
   }
 }

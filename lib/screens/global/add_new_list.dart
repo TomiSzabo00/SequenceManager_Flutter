@@ -9,12 +9,14 @@ class AddNewList extends StatefulWidget {
     required this.fetchItems,
     required this.updateItem,
     required this.deleteItem,
+    required this.addNewItem,
   }) : super(key: key);
 
   final String title;
   Future<List<ListItem>> fetchItems;
   Function(ListItem) updateItem;
   Function(ListItem) deleteItem;
+  Function() addNewItem;
 
   @override
   AddNewListState createState() => AddNewListState();
@@ -88,7 +90,9 @@ class AddNewListState extends State<AddNewList> {
                 width: double.infinity,
                 height: 50,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    widget.addNewItem();
+                  },
                   child: const Text(
                     "Add new",
                     style: TextStyle(fontSize: 16),

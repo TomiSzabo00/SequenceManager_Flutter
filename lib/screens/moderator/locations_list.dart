@@ -13,11 +13,12 @@ class LocationsList extends StatefulWidget {
 
 class LocationsListState extends State<LocationsList> {
   late Future<List<ListItem>> fetchLocations;
-  
+
   @override
   void initState() {
     super.initState();
-    fetchLocations = Provider.of<ModeratorViewModel>(context, listen: false).fetchLocations();
+    fetchLocations = Provider.of<ModeratorViewModel>(context, listen: false)
+        .fetchLocations();
   }
 
   @override
@@ -28,6 +29,7 @@ class LocationsListState extends State<LocationsList> {
       fetchItems: fetchLocations,
       updateItem: viewModel.editLocation,
       deleteItem: viewModel.deleteLocation,
+      addNewItem: viewModel.addNewLocation,
     );
   }
 }

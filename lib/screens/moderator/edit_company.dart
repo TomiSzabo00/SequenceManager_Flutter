@@ -45,7 +45,7 @@ class EditCompanyScreenState extends State<EditCompanyScreen> {
                 ),
                 contentPadding: const EdgeInsets.all(0),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 60),
               const Align(
                 alignment: Alignment.centerLeft,
                 child: Text("Managers:", style: TextStyle(fontSize: 16)),
