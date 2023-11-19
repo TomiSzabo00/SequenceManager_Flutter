@@ -45,11 +45,26 @@ class AddNewListState extends State<AddNewList> {
                             subtitle: snapshot.data![index].subtitle.isEmpty
                                 ? null
                                 : Text(snapshot.data![index].subtitle),
-                            trailing: IconButton(
-                              onPressed: () {
-                                showMoreMenu();
+                            trailing: PopupMenuButton(
+                              onSelected: (value) {
+                                if (value == "update") {
+                                  widget.viewModel.updateItem();
+                                } else if (value == "delete") {
+                                  widget.viewModel.deleteItem();
+                                }
                               },
-                              icon: const Icon(Icons.more_horiz),
+                              itemBuilder: (context) {
+                                return const [
+                                  PopupMenuItem(
+                                    value: "update",
+                                    child: Text("Edit"),
+                                  ),
+                                  PopupMenuItem(
+                                    value: "delete",
+                                    child: Text("Delete"),
+                                  ),
+                                ];
+                              },
                             ),
                             contentPadding: const EdgeInsets.all(0),
                           );
@@ -80,31 +95,5 @@ class AddNewListState extends State<AddNewList> {
         ),
       ),
     );
-  }
-
-  void showMoreMenu() async {
-    await showMenu(
-      context: context,
-      position: const RelativeRect.fromLTRB(100, 100, 0, 0),
-      items: const [
-        PopupMenuItem(
-          value: "update",
-          child: Text("Edit"),
-        ),
-        PopupMenuItem(
-          value: "delete",
-          child: Text("Delete"),
-        ),
-      ],
-    ).then((value) => {
-          if (value == "update")
-            {
-              // TODO: update item
-            }
-          else if (value == "delete")
-            {
-              // TODO: delete item
-            }
-        });
   }
 }
