@@ -5,7 +5,7 @@ import 'package:sequence_manager/models/helper/manager_data.dart';
 import 'package:sequence_manager/models/list/user_list_item.dart';
 import 'package:sequence_manager/screens/admin/admin_viewmodel.dart';
 import 'package:sequence_manager/screens/global/alert_wrapper.dart';
-import 'package:sequence_manager/screens/manager/add_manager.dart';
+import 'package:sequence_manager/screens/admin/add_manager.dart';
 
 class EditCompanyScreen extends StatefulWidget {
   const EditCompanyScreen({Key? key, required this.company}) : super(key: key);
@@ -100,7 +100,10 @@ class EditCompanyScreenState extends State<EditCompanyScreen> {
                     onPressed: () {
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (context) => AddManagerScreen(),
+                          builder: (context) => AddManagerScreen(
+                              company: widget.company, viewModel: viewModel, doneAction: () {
+                                Navigator.of(context).pop();
+                              }),
                         ),
                       );
                     },

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sequence_manager/models/company.dart';
 import 'package:sequence_manager/screens/admin/admin_viewmodel.dart';
-import 'package:sequence_manager/screens/manager/add_manager.dart';
+import 'package:sequence_manager/screens/admin/add_manager.dart';
 
 class NewCompanyScreen extends StatefulWidget {
   const NewCompanyScreen({Key? key}) : super(key: key);
@@ -71,7 +72,13 @@ class NewCompanyScreenState extends State<NewCompanyScreen> {
                   onPressed: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (context) => AddManagerScreen(),
+                        builder: (context) => AddManagerScreen(
+                            company:
+                                Company(name: viewModel.nameController.text),
+                            viewModel: viewModel,
+                            doneAction: () {
+                              Navigator.of(context).pop();
+                            }),
                       ),
                     );
                   },

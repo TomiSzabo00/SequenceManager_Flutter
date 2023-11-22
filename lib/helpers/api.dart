@@ -154,12 +154,31 @@ class API {
     }
   }
 
+  Future<ManagerData> addManager(Company company, String email) async {
+    // HttpWithMiddleware http = HttpWithMiddleware.build(middlewares: [
+    //   HttpLogger(logLevel: LogLevel.BODY),
+    // ]);
+    final url = Uri.parse("$_baseURL/admin/company/moderators");
+    final body = {
+      "company": company.name,
+      "email": email,
+    };
+    final response =
+        await http.post(url, body: jsonEncode(body), headers: header);
+
+    if (response.statusCode == 201) {
+      return ManagerData.fromJson(jsonDecode(response.body));
+    } else {
+      throw errorMessageFromResponse(response.body);
+    }
+  }
+
   String errorMessageFromResponse(String response) {
     if (response.isEmpty) {
       return "Something went wrong";
     }
     final json = jsonDecode(response) as Map<String, dynamic>;
-    return json["errorType"];
+    return json["message"];
   }
 
   void updateCookie(http.Response response) {

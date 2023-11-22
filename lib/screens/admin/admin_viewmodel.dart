@@ -10,6 +10,7 @@ import 'package:sequence_manager/screens/global/alert_viewmodel.dart';
 
 class AdminViewModel extends AlertViewModel {
   TextEditingController nameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
   List<UserListItem> managers = [];
 
   bool isNameValid = true;
@@ -65,5 +66,16 @@ class AdminViewModel extends AlertViewModel {
   void validateName() {
     isNameValid = nameController.text.isNotEmpty;
     notifyListeners();
+  }
+
+  void addManager(Company company) {
+    API.instance.addManager(company, emailController.text).then((e) {
+      managers.add(UserListItem(
+          user: User(name: e.name, email: e.email, type: UserType.manager)));
+      notifyListeners();
+    }).catchError((e) {
+      alertMessage = e.toString();
+      notifyListeners();
+    });
   }
 }

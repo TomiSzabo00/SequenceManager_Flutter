@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
-import 'add_manager_viewmodel.dart';
+import 'package:sequence_manager/models/company.dart';
+import 'package:sequence_manager/screens/admin/admin_viewmodel.dart';
 
 class AddManagerScreen extends StatelessWidget {
-  final TextEditingController textController = TextEditingController();
-
-  AddManagerScreen({super.key});
+  const AddManagerScreen(
+      {super.key, required this.company, required this.viewModel, required this.doneAction});
+  final Company company;
+  final AdminViewModel viewModel;
+  final Function doneAction;
 
   @override
   Widget build(BuildContext context) {
-    final viewModel = context.watch<AddManagerViewModel>();
     return Scaffold(
       appBar: AppBar(
         title: const Text("Add new manager"),
@@ -22,18 +22,16 @@ class AddManagerScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               TextField(
-                controller: textController,
+                controller: viewModel.emailController,
                 decoration: InputDecoration(
-                  labelText: "Add manager to ${viewModel.getPlace}",
+                  labelText: "Add manager to ${company.name}",
                 ),
-                onChanged: (value) {
-                  viewModel.setName(value);
-                },
               ),
               const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
-                  viewModel.save();
+                  viewModel.addManager(company);
+                  doneAction();
                 },
                 child: const Text("Submit"),
               ),
