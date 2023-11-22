@@ -49,7 +49,7 @@ class AuthViewModel extends AlertViewModel {
 
     try {
       final user =
-          await API.login(emailController.text, passwordController.text);
+          await API.instance.login(emailController.text, passwordController.text);
       loggedInUser = user;
     } catch (e) {
       alertMessage = e.toString();
@@ -88,7 +88,7 @@ class AuthViewModel extends AlertViewModel {
 
   void logout() async {
     try {
-      await API.logout();
+      await API.instance.logout();
       loggedInUser = null;
     } catch (e) {
       alertMessage = e.toString();

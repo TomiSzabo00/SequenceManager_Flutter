@@ -3,17 +3,24 @@ import 'package:sequence_manager/models/location.dart';
 import 'package:sequence_manager/models/user.dart';
 import 'package:http/http.dart' as http;
 // Uncomment for debug prints
-import 'package:pretty_http_logger/pretty_http_logger.dart';
+// import 'package:pretty_http_logger/pretty_http_logger.dart';
 
 class API {
-  static const String _baseURL = "http://localhost.proxyman.io:8080/api";
-  static String get baseURL => _baseURL;
-  static Map<String, String> get header => {
-        "Content-Type": "application/json",
-        "Connection": "keep-alive",
-      };
+  API._privateConstructor();
+  static final API instance = API._privateConstructor();
 
-  static Future<User> login(String email, String password) async {
+  factory API() {
+    return instance;
+  }
+
+  final String _baseURL = "http://localhost:8080/api";
+  String get baseURL => _baseURL;
+  Map<String, String> header = {
+    "Content-Type": "application/json",
+    "Connection": "keep-alive",
+  };
+
+  Future<User> login(String email, String password) async {
     // Uncomment for debug prints
     // HttpWithMiddleware http = HttpWithMiddleware.build(middlewares: [
     //   HttpLogger(logLevel: LogLevel.BODY),
@@ -29,13 +36,14 @@ class API {
         await http.post(url, body: jsonEncode(body), headers: header);
 
     if (response.statusCode == 200) {
+      updateCookie(response);
       return User.fromJson(jsonDecode(response.body) as Map<String, dynamic>);
     } else {
       throw errorMessageFromResponse(response.body);
     }
   }
 
-  static Future<void> logout() async {
+  Future<void> logout() async {
     final url = Uri.parse("$_baseURL/auth/logout");
     final response = await http.delete(url, headers: header);
 
@@ -46,14 +54,15 @@ class API {
     }
   }
 
-  static Future<List<Location>> getLocations() {
+  Future<List<Location>> getLocations() {
     // Uncomment for debug prints
-    HttpWithMiddleware http = HttpWithMiddleware.build(middlewares: [
-      HttpLogger(logLevel: LogLevel.BODY),
-    ]);
+    // HttpWithMiddleware http = HttpWithMiddleware.build(middlewares: [
+    //   HttpLogger(logLevel: LogLevel.BODY),
+    // ]);
     final url = Uri.parse("$_baseURL/moderators/company/locations");
     return http.get(url, headers: header).then((response) {
       if (response.statusCode == 200) {
+        updateCookie(response);
         final json = jsonDecode(response.body) as List<dynamic>;
         return json.map((e) => Location.fromJson(e)).toList();
       } else {
@@ -62,8 +71,17 @@ class API {
     });
   }
 
-  static String errorMessageFromResponse(String response) {
+  String errorMessageFromResponse(String response) {
     final json = jsonDecode(response) as Map<String, dynamic>;
     return json["errorType"];
+  }
+
+  void updateCookie(http.Response response) {
+    String? rawCookie = response.headers['set-cookie'];
+    if (rawCookie != null) {
+      int index = rawCookie.indexOf(';');
+      header['cookie'] =
+          (index == -1) ? rawCookie : rawCookie.substring(0, index);
+    }
   }
 }

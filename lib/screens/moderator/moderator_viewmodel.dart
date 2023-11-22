@@ -5,7 +5,7 @@ import 'package:sequence_manager/screens/global/alert_viewmodel.dart';
 class ModeratorViewModel extends AlertViewModel {
   Future<List<ListItem>> fetchLocations() async {
     try {
-      return await API.getLocations().then((value) {
+      return await API.instance.getLocations().then((value) {
         return value.map((e) => ListItem(title: e.name)).toList();
       });
     } catch (e) {
