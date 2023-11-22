@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:sequence_manager/models/category.dart';
+import 'package:sequence_manager/models/employee.dart';
 import 'package:sequence_manager/models/location.dart';
 import 'package:sequence_manager/models/user.dart';
 import 'package:http/http.dart' as http;
@@ -81,6 +82,22 @@ class API {
       if (response.statusCode == 200) {
         final json = jsonDecode(response.body) as List<dynamic>;
         return json.map((e) => Category.fromJson(e)).toList();
+      } else {
+        throw errorMessageFromResponse(response.body);
+      }
+    });
+  }
+
+  Future<List<Employee>> getEmployees() {
+    // Uncomment for debug prints
+    // HttpWithMiddleware http = HttpWithMiddleware.build(middlewares: [
+    //   HttpLogger(logLevel: LogLevel.BODY),
+    // ]);
+    final url = Uri.parse("$_baseURL/moderators/company/employees");
+    return http.get(url, headers: header).then((response) {
+      if (response.statusCode == 200) {
+        final json = jsonDecode(response.body) as List<dynamic>;
+        return json.map((e) => Employee.fromJson(e)).toList();
       } else {
         throw errorMessageFromResponse(response.body);
       }

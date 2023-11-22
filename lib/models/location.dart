@@ -8,4 +8,8 @@ class Location {
       name: json['name'],
     );
   }
+
+  factory Location.fromString(String name) {
+    return Location(name: name);
+  }
 }

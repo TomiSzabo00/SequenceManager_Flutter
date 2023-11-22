@@ -1,4 +1,5 @@
 import 'package:sequence_manager/helpers/api.dart';
+import 'package:sequence_manager/models/list/employee_list_item.dart';
 import 'package:sequence_manager/models/list/list_item.dart';
 import 'package:sequence_manager/models/list/location_list_item.dart';
 import 'package:sequence_manager/models/location.dart';
@@ -30,12 +31,15 @@ class ModeratorViewModel extends AlertViewModel {
   }
 
   Future<List<ListItem>> fetchEmployees() {
-    final mockList = [
-      ListItem(title: "Empl 1"),
-      ListItem(title: "Empl 2"),
-      ListItem(title: "Empl 3"),
-    ];
-    return Future.value(mockList);
+    try {
+      return API.instance.getEmployees().then((value) {
+        return value.map((e) => EmployeeListItem(employee: e)).toList();
+      });
+    } catch (e) {
+      alertMessage = e.toString();
+      notifyListeners();
+      return Future.value([]);
+    }
   }
 
   void deleteLocation(ListItem item) {}
