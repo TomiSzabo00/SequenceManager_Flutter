@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sequence_manager/models/user.dart';
 import 'package:sequence_manager/screens/global/app_bar_with_name.dart';
-import 'package:sequence_manager/screens/user/user_getNumber_viewmodel.dart';
+import 'package:sequence_manager/screens/user/user_get_number_viewmodel.dart';
 
 class UserGetNumberScreen extends StatefulWidget {
-  const UserGetNumberScreen({super.key});
+  const UserGetNumberScreen({super.key, required this.user});
+  final User user;
 
   @override
   UserGetNumberScreenState createState() => UserGetNumberScreenState();
@@ -16,7 +18,7 @@ class UserGetNumberScreenState extends State<UserGetNumberScreen> {
     final viewModel = context.watch<UserGetNumberViewModel>();
     return Scaffold(
       appBar: AppBarWithName(
-        name: "User",
+        name: widget.user.firstname,
       ),
       body: Center(
         child: FractionallySizedBox(

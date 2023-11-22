@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class UserGetNumberViewModel extends ChangeNotifier {
-  String? _place="";
-  String? _category="";
+  String? _place;
+  String? _category;
 
   String? get getPlace=>_place;
 

@@ -42,9 +42,9 @@ class AuthManagerState extends State<AuthManager> {
                   case UserType.manager:
                     return ModeratorMenu(user: viewModel.loggedInUser!);
                   case UserType.user:
-                    return const UserGetNumberScreen();
+                    return UserGetNumberScreen(user: viewModel.loggedInUser!);
                   case UserType.worker:
-                    return const WorkerScreen();
+                    return WorkerScreen(user: viewModel.loggedInUser!);
                 }
               } else {
                 if (viewModel.isLogin) {

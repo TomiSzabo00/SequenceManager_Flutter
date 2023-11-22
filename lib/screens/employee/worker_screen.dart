@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sequence_manager/models/user.dart';
 import 'package:sequence_manager/screens/employee/employee_viewmodel.dart';
 import 'package:sequence_manager/screens/global/app_bar_with_name.dart';
 
 class WorkerScreen extends StatelessWidget {
-  const WorkerScreen({super.key});
+  const WorkerScreen({super.key, required this.user});
+  final User user;
 
   @override
   Widget build(BuildContext context) {
     final viewModel = context.watch<EmployeeViewModel>();
     return Scaffold(
       appBar: AppBarWithName(
-        name: "User",
+        name: user.firstname,
       ),
       body: Center(
         child: Column(

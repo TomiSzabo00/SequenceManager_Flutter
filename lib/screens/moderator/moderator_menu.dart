@@ -13,7 +13,7 @@ class ModeratorMenu extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBarWithName(
-        name: user.name,
+        name: user.firstname,
       ),
       body: Center(
         child: Column(

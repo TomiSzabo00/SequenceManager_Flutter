@@ -11,7 +11,7 @@ import 'package:sequence_manager/screens/location/edit_location_viewmodel.dart';
 import 'package:sequence_manager/screens/location/new_location_viewmodel.dart';
 import 'package:sequence_manager/screens/manager/add_manager_viewmodel.dart';
 import 'package:sequence_manager/screens/moderator/moderator_viewmodel.dart';
-import 'package:sequence_manager/screens/user/user_getNumber_viewmodel.dart';
+import 'package:sequence_manager/screens/user/user_get_number_viewmodel.dart';
 import 'package:sequence_manager/screens/user/user_waiting_viewmodel.dart';
 
 var providers = [
