@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sequence_manager/models/user.dart';
 import 'package:sequence_manager/screens/admin/companies_list.dart';
 import 'package:sequence_manager/screens/admin/manage_users.dart';
+import 'package:sequence_manager/screens/global/app_bar_with_name.dart';
 
 class AdminMenu extends StatelessWidget {
   const AdminMenu({super.key, required this.user});
@@ -10,18 +11,8 @@ class AdminMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        actions: [
-          TextButton(
-            onPressed: () {
-              // Handle profile
-            },
-            child: Text(
-              "Hello, ${user.firstname}",
-              style: const TextStyle(color: Colors.white),
-            ),
-          ),
-        ],
+      appBar: AppBarWithName(
+        name: user.name,
       ),
       body: Center(
         child: Column(

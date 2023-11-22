@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sequence_manager/screens/global/app_bar_with_name.dart';
 import 'package:sequence_manager/screens/user/user_getNumber_viewmodel.dart';
 
 class UserGetNumberScreen extends StatefulWidget {
   const UserGetNumberScreen({super.key});
 
   @override
-  _UserGetNumberScreenState createState() => _UserGetNumberScreenState();
+  UserGetNumberScreenState createState() => UserGetNumberScreenState();
 }
 
-class _UserGetNumberScreenState extends State<UserGetNumberScreen> {
-
+class UserGetNumberScreenState extends State<UserGetNumberScreen> {
   @override
   Widget build(BuildContext context) {
     final viewModel = context.watch<UserGetNumberViewModel>();
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Get number"),
+      appBar: AppBarWithName(
+        name: "User",
       ),
       body: Center(
         child: FractionallySizedBox(
@@ -32,7 +32,9 @@ class _UserGetNumberScreenState extends State<UserGetNumberScreen> {
                 onChanged: (String? newValue) {
                   viewModel.setPlace(newValue);
                 },
-                items: viewModel.getPlaces().map<DropdownMenuItem<String>>((String option) {
+                items: viewModel
+                    .getPlaces()
+                    .map<DropdownMenuItem<String>>((String option) {
                   return DropdownMenuItem<String>(
                     value: option,
                     child: Text(option),
@@ -48,7 +50,9 @@ class _UserGetNumberScreenState extends State<UserGetNumberScreen> {
                 onChanged: (String? newValue) {
                   viewModel.setCategory(newValue);
                 },
-                items: viewModel.getCategories().map<DropdownMenuItem<String>>((String option) {
+                items: viewModel
+                    .getCategories()
+                    .map<DropdownMenuItem<String>>((String option) {
                   return DropdownMenuItem<String>(
                     value: option,
                     child: Text(option),

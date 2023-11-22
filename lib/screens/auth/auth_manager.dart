@@ -4,11 +4,11 @@ import 'package:sequence_manager/models/user.dart';
 import 'package:sequence_manager/screens/auth/auth_viewmodel.dart';
 import 'package:sequence_manager/screens/auth/login_screen.dart';
 import 'package:sequence_manager/screens/auth/register_screen.dart';
-import 'package:sequence_manager/screens/employee/employee.dart';
+import 'package:sequence_manager/screens/employee/worker_screen.dart';
 import 'package:sequence_manager/screens/global/alert_wrapper.dart';
 import 'package:sequence_manager/screens/admin/admin_menu.dart';
 import 'package:sequence_manager/screens/moderator/moderator_menu.dart';
-import 'package:sequence_manager/screens/user/user_getNumber.dart';
+import 'package:sequence_manager/screens/user/user_get_number_screen.dart';
 
 class AuthManager extends StatefulWidget {
   const AuthManager({Key? key}) : super(key: key);

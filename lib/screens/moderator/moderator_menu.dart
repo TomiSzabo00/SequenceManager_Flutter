@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sequence_manager/models/user.dart';
+import 'package:sequence_manager/screens/global/app_bar_with_name.dart';
 import 'package:sequence_manager/screens/moderator/categories_list.dart';
 import 'package:sequence_manager/screens/moderator/employee_list.dart';
 import 'package:sequence_manager/screens/moderator/locations_list.dart';
@@ -11,18 +12,8 @@ class ModeratorMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        actions: [
-          TextButton(
-            onPressed: () {
-              // Handle profile
-            },
-            child: Text(
-              "Hello, ${user.firstname}",
-              style: const TextStyle(color: Colors.white),
-            ),
-          ),
-        ],
+      appBar: AppBarWithName(
+        name: user.name,
       ),
       body: Center(
         child: Column(
