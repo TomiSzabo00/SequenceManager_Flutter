@@ -139,7 +139,25 @@ class API {
     });
   }
 
+  Future<void> removeManager(Company company, ManagerData manager) async {
+    HttpWithMiddleware http = HttpWithMiddleware.build(middlewares: [
+      HttpLogger(logLevel: LogLevel.BODY),
+    ]);
+    final url = Uri.parse(
+        "$_baseURL/admin/companies/${company.name}/moderators/${manager.email}");
+    final response = await http.delete(url, headers: header);
+
+    if (response.statusCode == 200) {
+      return;
+    } else {
+      throw errorMessageFromResponse(response.body);
+    }
+  }
+
   String errorMessageFromResponse(String response) {
+    if (response.isEmpty) {
+      return "Something went wrong";
+    }
     final json = jsonDecode(response) as Map<String, dynamic>;
     return json["errorType"];
   }
