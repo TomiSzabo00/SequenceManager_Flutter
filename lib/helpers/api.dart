@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:sequence_manager/models/category.dart';
+import 'package:sequence_manager/models/company.dart';
 import 'package:sequence_manager/models/employee.dart';
 import 'package:sequence_manager/models/location.dart';
 import 'package:sequence_manager/models/user.dart';
@@ -98,6 +99,22 @@ class API {
       if (response.statusCode == 200) {
         final json = jsonDecode(response.body) as List<dynamic>;
         return json.map((e) => Employee.fromJson(e)).toList();
+      } else {
+        throw errorMessageFromResponse(response.body);
+      }
+    });
+  }
+
+  Future<List<Company>> getCompanies() {
+    // Uncomment for debug prints
+    // HttpWithMiddleware http = HttpWithMiddleware.build(middlewares: [
+    //   HttpLogger(logLevel: LogLevel.BODY),
+    // ]);
+    final url = Uri.parse("$_baseURL/admin/companies");
+    return http.get(url, headers: header).then((response) {
+      if (response.statusCode == 200) {
+        final json = jsonDecode(response.body) as List<dynamic>;
+        return json.map((e) => Company.fromJson(e)).toList();
       } else {
         throw errorMessageFromResponse(response.body);
       }
