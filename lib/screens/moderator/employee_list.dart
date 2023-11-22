@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sequence_manager/models/list/list_item.dart';
+import 'package:sequence_manager/screens/employee/edit_employee.dart';
 import 'package:sequence_manager/screens/employee/new_employee.dart';
 import 'package:sequence_manager/screens/global/add_new_list.dart';
 import 'package:sequence_manager/screens/moderator/moderator_viewmodel.dart';
@@ -28,7 +29,11 @@ class EmployeeListState extends State<EmployeeList> {
     return AddNewList(
         title: "Employees",
         fetchItems: fetchEmployees,
-        updateItem: viewModel.editEmployee,
+        updateItem: (item) {
+          Navigator.of(context).push(
+            MaterialPageRoute(builder: (context) => const EditEmployeeScreen()),
+          );
+        },
         deleteItem: viewModel.deleteEmployee,
         addNewItem: () {
           Navigator.of(context).push(

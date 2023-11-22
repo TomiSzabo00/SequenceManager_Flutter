@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sequence_manager/models/list/list_item.dart';
+import 'package:sequence_manager/screens/category/edit_category.dart';
 import 'package:sequence_manager/screens/category/new_category.dart';
 import 'package:sequence_manager/screens/global/add_new_list.dart';
 import 'package:sequence_manager/screens/moderator/moderator_viewmodel.dart';
@@ -28,7 +29,11 @@ class CategoriesListState extends State<CategoriesList> {
     return AddNewList(
       title: "Categories",
       fetchItems: fetchCategories,
-      updateItem: viewModel.editCategory,
+      updateItem: (item) {
+        Navigator.of(context).push(
+          MaterialPageRoute(builder: (context) => EditCategoryScreen()),
+        );
+      },
       deleteItem: viewModel.deleteCategory,
       addNewItem: () {
         Navigator.of(context).push(

@@ -7,10 +7,10 @@ class EditEmployeeScreen extends StatefulWidget {
   const EditEmployeeScreen({super.key});
 
   @override
-  _EditEmployeeScreenState createState() => _EditEmployeeScreenState();
+  EditEmployeeScreenState createState() => EditEmployeeScreenState();
 }
 
-class _EditEmployeeScreenState extends State<EditEmployeeScreen> {
+class EditEmployeeScreenState extends State<EditEmployeeScreen> {
 
   @override
   Widget build(BuildContext context) {

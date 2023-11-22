@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:sequence_manager/models/list/list_item.dart';
 import 'package:sequence_manager/screens/global/add_new_list.dart';
 import 'package:sequence_manager/screens/global/alert_wrapper.dart';
+import 'package:sequence_manager/screens/location/edit_location.dart';
 import 'package:sequence_manager/screens/location/new_location.dart';
 import 'package:sequence_manager/screens/moderator/moderator_viewmodel.dart';
 
@@ -31,7 +32,11 @@ class LocationsListState extends State<LocationsList> {
       builder: (_, __) => AddNewList(
         title: "Locations",
         fetchItems: fetchLocations,
-        updateItem: viewModel.editLocation,
+        updateItem: (item) {
+          Navigator.of(context).push(
+            MaterialPageRoute(builder: (context) => EditLocationScreen()),
+          );
+        },
         deleteItem: viewModel.deleteLocation,
         addNewItem: () {
           Navigator.of(context).push(

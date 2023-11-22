@@ -33,12 +33,6 @@ class ModeratorViewModel extends AlertViewModel {
     return Future.value(mockList);
   }
 
-  void editLocation(ListItem item) {}
-
-  void editCategory(ListItem item) {}
-
-  void editEmployee(ListItem item) {}
-
   void deleteLocation(ListItem item) {}
 
   void deleteCategory(ListItem item) {}
