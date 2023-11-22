@@ -11,10 +11,8 @@ class WorkerScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final viewModel = context.watch<EmployeeViewModel>();
-    return Scaffold(
-      appBar: AppBarWithName(
-        name: user.firstname,
-      ),
+    return ScaffoldWithName(
+      name: user.firstname,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

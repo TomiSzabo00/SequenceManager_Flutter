@@ -16,10 +16,8 @@ class UserGetNumberScreenState extends State<UserGetNumberScreen> {
   @override
   Widget build(BuildContext context) {
     final viewModel = context.watch<UserGetNumberViewModel>();
-    return Scaffold(
-      appBar: AppBarWithName(
-        name: widget.user.firstname,
-      ),
+    return ScaffoldWithName(
+      name: widget.user.firstname,
       body: Center(
         child: FractionallySizedBox(
           widthFactor: 0.75, // 75% of the screen width

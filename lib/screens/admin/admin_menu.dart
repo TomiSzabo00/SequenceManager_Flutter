@@ -10,10 +10,8 @@ class AdminMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBarWithName(
-        name: user.firstname,
-      ),
+    return ScaffoldWithName(
+      name: user.firstname,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
