@@ -13,9 +13,9 @@ class AdminViewModel extends ChangeNotifier {
 
   Future<List<CompanyListItem>> fetchCompanies() {
     final mockList = [
-      CompanyListItem(company: Company(id: "0", name: "Comp 1")),
-      CompanyListItem(company: Company(id: "1", name: "Comp 2")),
-      CompanyListItem(company: Company(id: "2", name: "Comp 3")),
+      CompanyListItem(company: Company(name: "Comp 1")),
+      CompanyListItem(company: Company(name: "Comp 2")),
+      CompanyListItem(company: Company(name: "Comp 3")),
     ];
     return Future.value(mockList);
   }

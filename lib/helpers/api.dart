@@ -62,7 +62,6 @@ class API {
     final url = Uri.parse("$_baseURL/moderators/company/locations");
     return http.get(url, headers: header).then((response) {
       if (response.statusCode == 200) {
-        updateCookie(response);
         final json = jsonDecode(response.body) as List<dynamic>;
         return json.map((e) => Location.fromJson(e)).toList();
       } else {
