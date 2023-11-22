@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 class NewEmployeeViewModel extends ChangeNotifier {
   String _name="";
-  String? _location="";
-  String? _category="";
+  String? _location;
+  String? _category;
 
   String get getName => _name;
 

@@ -4,9 +4,8 @@ import 'package:sequence_manager/models/list/company_list_item.dart';
 import 'package:sequence_manager/models/list/list_item.dart';
 import 'package:sequence_manager/models/list/user_list_item.dart';
 import 'package:sequence_manager/models/user.dart';
-import 'package:sequence_manager/screens/global/list_viewmodel.dart';
 
-class AdminViewModel extends ListViewModel {
+class AdminViewModel extends ChangeNotifier {
   TextEditingController nameController = TextEditingController();
   List<UserListItem> managers = [];
 

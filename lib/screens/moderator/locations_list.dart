@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sequence_manager/models/list/list_item.dart';
 import 'package:sequence_manager/screens/global/add_new_list.dart';
+import 'package:sequence_manager/screens/global/alert_wrapper.dart';
+import 'package:sequence_manager/screens/location/new_location.dart';
 import 'package:sequence_manager/screens/moderator/moderator_viewmodel.dart';
 
 class LocationsList extends StatefulWidget {
@@ -24,12 +26,19 @@ class LocationsListState extends State<LocationsList> {
   @override
   Widget build(BuildContext context) {
     final viewModel = ModeratorViewModel();
-    return AddNewList(
-      title: "Locations",
-      fetchItems: fetchLocations,
-      updateItem: viewModel.editLocation,
-      deleteItem: viewModel.deleteLocation,
-      addNewItem: viewModel.addNewLocation,
+    return AlertWrapper<ModeratorViewModel>(
+      viewModel: viewModel,
+      builder: (_, __) => AddNewList(
+        title: "Locations",
+        fetchItems: fetchLocations,
+        updateItem: viewModel.editLocation,
+        deleteItem: viewModel.deleteLocation,
+        addNewItem: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(builder: (context) => NewLocationScreen()),
+          );
+        },
+      ),
     );
   }
 }

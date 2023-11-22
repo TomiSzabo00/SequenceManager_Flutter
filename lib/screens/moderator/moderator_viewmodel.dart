@@ -1,14 +1,18 @@
+import 'package:sequence_manager/helpers/api.dart';
 import 'package:sequence_manager/models/list/list_item.dart';
-import 'package:sequence_manager/screens/global/list_viewmodel.dart';
+import 'package:sequence_manager/screens/global/alert_viewmodel.dart';
 
-class ModeratorViewModel extends ListViewModel {
-  Future<List<ListItem>> fetchLocations() {
-    final mockList = [
-      ListItem(title: "Loc 1"),
-      ListItem(title: "Loc 2"),
-      ListItem(title: "Loc 3"),
-    ];
-    return Future.value(mockList);
+class ModeratorViewModel extends AlertViewModel {
+  Future<List<ListItem>> fetchLocations() async {
+    try {
+      return await API.getLocations().then((value) {
+        return value.map((e) => ListItem(title: e.name)).toList();
+      });
+    } catch (e) {
+      alertMessage = e.toString();
+      notifyListeners();
+      return [];
+    }
   }
 
   Future<List<ListItem>> fetchCategories() {
@@ -28,12 +32,6 @@ class ModeratorViewModel extends ListViewModel {
     ];
     return Future.value(mockList);
   }
-
-  void addNewLocation() {}
-
-  void addNewCategory() {}
-
-  void addNewEmployee() {}
 
   void editLocation(ListItem item) {}
 
