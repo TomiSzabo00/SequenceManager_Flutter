@@ -5,8 +5,9 @@ import 'package:sequence_manager/screens/global/app_bar_with_name.dart';
 import 'package:sequence_manager/screens/user/user_get_number_viewmodel.dart';
 
 class UserGetNumberScreen extends StatefulWidget {
-  const UserGetNumberScreen({super.key, required this.user});
+  const UserGetNumberScreen({super.key, required this.user, this.onLogout});
   final User user;
+  final Function? onLogout;
 
   @override
   UserGetNumberScreenState createState() => UserGetNumberScreenState();
@@ -18,6 +19,7 @@ class UserGetNumberScreenState extends State<UserGetNumberScreen> {
     final viewModel = context.watch<UserGetNumberViewModel>();
     return ScaffoldWithName(
       name: widget.user.firstname,
+      onLogout: widget.onLogout,
       body: Center(
         child: FractionallySizedBox(
           widthFactor: 0.75, // 75% of the screen width

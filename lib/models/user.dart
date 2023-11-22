@@ -20,6 +20,10 @@ class User {
   String get firstname {
     return name.split(" ")[0];
   }
+
+  factory User.empty() {
+    return User(name: "", email: "");
+  }
 }
 
 enum UserType {

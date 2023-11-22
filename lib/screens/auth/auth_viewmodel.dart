@@ -86,8 +86,13 @@ class AuthViewModel extends AlertViewModel {
     notifyListeners();
   }
 
-  void logout() {
-    loggedInUser = null;
+  void logout() async {
+    try {
+      await API.logout();
+      loggedInUser = null;
+    } catch (e) {
+      alertMessage = e.toString();
+    }
     notifyListeners();
   }
 }

@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 // import 'package:pretty_http_logger/pretty_http_logger.dart';
 
 class API {
-  static const String _baseURL = "http://localhost.proxyman.io:8080";
+  static const String _baseURL = "http://localhost.proxyman.io:8080/api";
   static String get baseURL => _baseURL;
   static Map<String, String> get header => {
         "Content-Type": "application/json",
@@ -17,7 +17,7 @@ class API {
     //   HttpLogger(logLevel: LogLevel.BODY),
     // ]);
 
-    final url = Uri.parse("$_baseURL/api/auth/login");
+    final url = Uri.parse("$_baseURL/auth/login");
     final body = {
       "email": email,
       "password": password,
@@ -28,6 +28,17 @@ class API {
 
     if (response.statusCode == 200) {
       return User.fromJson(jsonDecode(response.body) as Map<String, dynamic>);
+    } else {
+      throw errorMessageFromResponse(response.body);
+    }
+  }
+
+  static Future<void> logout() async {
+    final url = Uri.parse("$_baseURL/auth/logout");
+    final response = await http.delete(url, headers: header);
+
+    if (response.statusCode == 204) {
+      return;
     } else {
       throw errorMessageFromResponse(response.body);
     }

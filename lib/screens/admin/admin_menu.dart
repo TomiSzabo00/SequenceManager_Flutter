@@ -5,13 +5,15 @@ import 'package:sequence_manager/screens/admin/manage_users.dart';
 import 'package:sequence_manager/screens/global/app_bar_with_name.dart';
 
 class AdminMenu extends StatelessWidget {
-  const AdminMenu({super.key, required this.user});
+  const AdminMenu({super.key, required this.user, this.onLogout});
   final User user;
+  final Function? onLogout;
 
   @override
   Widget build(BuildContext context) {
     return ScaffoldWithName(
       name: user.firstname,
+      onLogout: onLogout,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

@@ -6,13 +6,15 @@ import 'package:sequence_manager/screens/moderator/employee_list.dart';
 import 'package:sequence_manager/screens/moderator/locations_list.dart';
 
 class ModeratorMenu extends StatelessWidget {
-  const ModeratorMenu({super.key, required this.user});
+  const ModeratorMenu({super.key, required this.user, this.onLogout});
   final User user;
+  final Function? onLogout;
 
   @override
   Widget build(BuildContext context) {
     return ScaffoldWithName(
       name: user.firstname,
+      onLogout: onLogout,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

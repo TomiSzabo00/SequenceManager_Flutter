@@ -4,11 +4,13 @@ class ScaffoldWithName extends StatelessWidget implements PreferredSizeWidget {
   const ScaffoldWithName({
     required this.name,
     this.body,
+    this.onLogout,
     Key? key,
   }) : super(key: key);
 
   final String name;
   final Widget? body;
+  final Function? onLogout;
 
   @override
   Scaffold build(BuildContext context) {
@@ -45,7 +47,7 @@ class ScaffoldWithName extends StatelessWidget implements PreferredSizeWidget {
             ListTile(
               title: const Text('Logout'),
               onTap: () {
-                // Handle logout
+                onLogout?.call();
               },
             ),
           ],

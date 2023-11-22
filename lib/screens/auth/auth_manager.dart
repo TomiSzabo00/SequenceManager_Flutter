@@ -38,13 +38,21 @@ class AuthManagerState extends State<AuthManager> {
                 final user = snapshot.data!;
                 switch (user.type) {
                   case UserType.admin:
-                    return AdminMenu(user: viewModel.loggedInUser!);
+                    return AdminMenu(
+                        user: viewModel.loggedInUser ?? User.empty(),
+                        onLogout: viewModel.logout);
                   case UserType.manager:
-                    return ModeratorMenu(user: viewModel.loggedInUser!);
+                    return ModeratorMenu(
+                        user: viewModel.loggedInUser ?? User.empty(),
+                        onLogout: viewModel.logout);
                   case UserType.user:
-                    return UserGetNumberScreen(user: viewModel.loggedInUser!);
+                    return UserGetNumberScreen(
+                        user: viewModel.loggedInUser ?? User.empty(),
+                        onLogout: viewModel.logout);
                   case UserType.worker:
-                    return WorkerScreen(user: viewModel.loggedInUser!);
+                    return WorkerScreen(
+                        user: viewModel.loggedInUser ?? User.empty(),
+                        onLogout: viewModel.logout);
                 }
               } else {
                 if (viewModel.isLogin) {

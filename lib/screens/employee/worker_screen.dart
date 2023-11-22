@@ -5,14 +5,16 @@ import 'package:sequence_manager/screens/employee/employee_viewmodel.dart';
 import 'package:sequence_manager/screens/global/app_bar_with_name.dart';
 
 class WorkerScreen extends StatelessWidget {
-  const WorkerScreen({super.key, required this.user});
+  const WorkerScreen({super.key, required this.user, this.onLogout});
   final User user;
+  final Function? onLogout;
 
   @override
   Widget build(BuildContext context) {
     final viewModel = context.watch<EmployeeViewModel>();
     return ScaffoldWithName(
       name: user.firstname,
+      onLogout: onLogout,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
