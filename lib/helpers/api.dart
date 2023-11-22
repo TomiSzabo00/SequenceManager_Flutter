@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:sequence_manager/models/category.dart';
 import 'package:sequence_manager/models/company.dart';
 import 'package:sequence_manager/models/employee.dart';
+import 'package:sequence_manager/models/helper/manager_data.dart';
 import 'package:sequence_manager/models/location.dart';
 import 'package:sequence_manager/models/user.dart';
 import 'package:http/http.dart' as http;
@@ -113,8 +114,25 @@ class API {
     final url = Uri.parse("$_baseURL/admin/companies");
     return http.get(url, headers: header).then((response) {
       if (response.statusCode == 200) {
+        final json = jsonDecode(response.body) as Map<String, dynamic>;
+        final companies = json["companies"] as List<dynamic>;
+        return companies.map((e) => Company.fromString(e)).toList();
+      } else {
+        throw errorMessageFromResponse(response.body);
+      }
+    });
+  }
+
+  Future<List<ManagerData>> getManagers(Company company) {
+    // Uncomment for debug prints
+    // HttpWithMiddleware http = HttpWithMiddleware.build(middlewares: [
+    //   HttpLogger(logLevel: LogLevel.BODY),
+    // ]);
+    final url = Uri.parse("$_baseURL/admin/companies/${company.name}");
+    return http.get(url, headers: header).then((response) {
+      if (response.statusCode == 200) {
         final json = jsonDecode(response.body) as List<dynamic>;
-        return json.map((e) => Company.fromJson(e)).toList();
+        return json.map((e) => ManagerData.fromJson(e)).toList();
       } else {
         throw errorMessageFromResponse(response.body);
       }

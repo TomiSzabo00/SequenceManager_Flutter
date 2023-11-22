@@ -27,20 +27,21 @@ class AdminViewModel extends AlertViewModel {
 
   void deleteCompany(ListItem item) {}
 
-  Future<List<UserListItem>> fetchManagers(Company company) {
-    final mockList = [
-      UserListItem(
-          user: User(
-              name: "User 1",
-              email: "email1@test.com",
-              type: UserType.manager)),
-      UserListItem(
-          user: User(
-              name: "User 2",
-              email: "email2@test.com",
-              type: UserType.manager)),
-    ];
-    return Future.value(mockList);
+  Future<List<UserListItem>> fetchManagers(Company company) async {
+    try {
+      return API.instance.getManagers(company).then((value) {
+        managers = value
+            .map((e) => UserListItem(
+                user:
+                    User(name: e.name, email: e.email, type: UserType.manager)))
+            .toList();
+        return managers;
+      });
+    } catch (e) {
+      alertMessage = e.toString();
+      notifyListeners();
+      return [];
+    }
   }
 
   void deleteManager(ListItem item) {}
