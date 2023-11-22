@@ -101,7 +101,9 @@ class EditCompanyScreenState extends State<EditCompanyScreen> {
                       Navigator.of(context).push(
                         MaterialPageRoute(
                           builder: (context) => AddManagerScreen(
-                              company: widget.company, viewModel: viewModel, doneAction: () {
+                              company: widget.company,
+                              viewModel: viewModel,
+                              doneAction: () {
                                 Navigator.of(context).pop();
                               }),
                         ),
@@ -126,7 +128,7 @@ class EditCompanyScreenState extends State<EditCompanyScreen> {
         return AlertDialog(
           title: const Text("Change name"),
           content: TextField(
-            controller: TextEditingController(text: widget.company.name),
+            controller: context.read<AdminViewModel>().nameController,
             decoration: const InputDecoration(
               labelText: "New name",
               border: OutlineInputBorder(),
@@ -141,7 +143,9 @@ class EditCompanyScreenState extends State<EditCompanyScreen> {
             ),
             TextButton(
               onPressed: () {
-                // Handle change name
+                context.read<AdminViewModel>().updateCompanyName(widget.company,
+                    context.read<AdminViewModel>().nameController.text);
+                Navigator.of(context).pop();
               },
               child: const Text("Change"),
             ),

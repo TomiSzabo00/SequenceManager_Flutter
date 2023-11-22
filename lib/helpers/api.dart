@@ -173,6 +173,25 @@ class API {
     }
   }
 
+  Future<void> updateCompanyName(Company company, String newName) async {
+    // HttpWithMiddleware http = HttpWithMiddleware.build(middlewares: [
+    //   HttpLogger(logLevel: LogLevel.BODY),
+    // ]);
+    final url = Uri.parse("$_baseURL/admin/companies");
+    final body = {
+      "previousCompanyName": company.name,
+      "newCompanyName": newName,
+    };
+    final response =
+        await http.patch(url, body: jsonEncode(body), headers: header);
+
+    if (response.statusCode == 200) {
+      return;
+    } else {
+      throw errorMessageFromResponse(response.body);
+    }
+  }
+
   String errorMessageFromResponse(String response) {
     if (response.isEmpty) {
       return "Something went wrong";

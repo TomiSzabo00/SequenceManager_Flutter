@@ -1,5 +1,5 @@
 class Company {
-  final String name;
+  String name;
 
   Company({
     required this.name,

@@ -78,4 +78,16 @@ class AdminViewModel extends AlertViewModel {
       notifyListeners();
     });
   }
+
+  void updateCompanyName(Company company, String newName) {
+    try {
+      API.instance.updateCompanyName(company, newName).then((value) {
+        company.name = newName;
+        notifyListeners();
+      });
+    } catch (e) {
+      alertMessage = e.toString();
+      notifyListeners();
+    }
+  }
 }

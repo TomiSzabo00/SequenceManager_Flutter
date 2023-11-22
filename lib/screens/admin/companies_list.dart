@@ -31,12 +31,19 @@ class CompaniesListState extends State<CompaniesList> {
       title: "Companies",
       fetchItems: fetchCompanies,
       updateItem: (company) {
-        Navigator.of(context).push(
+        Navigator.of(context)
+            .push(
           MaterialPageRoute(
             builder: (context) => EditCompanyScreen(
                 company: (company as CompanyListItem).company),
           ),
-        );
+        )
+            .then((_) {
+          setState(() {
+            fetchCompanies = Provider.of<AdminViewModel>(context, listen: false)
+                .fetchCompanies();
+          });
+        });
       },
       deleteItem: viewModel.deleteCompany,
       addNewItem: () {
