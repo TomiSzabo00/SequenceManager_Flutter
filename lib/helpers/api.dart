@@ -1,9 +1,9 @@
 import 'dart:convert';
+import 'package:sequence_manager/models/category.dart';
 import 'package:sequence_manager/models/location.dart';
 import 'package:sequence_manager/models/user.dart';
 import 'package:http/http.dart' as http;
-// Uncomment for debug prints
-// import 'package:pretty_http_logger/pretty_http_logger.dart';
+import 'package:pretty_http_logger/pretty_http_logger.dart';
 
 class API {
   API._privateConstructor();
@@ -64,6 +64,23 @@ class API {
       if (response.statusCode == 200) {
         final json = jsonDecode(response.body) as List<dynamic>;
         return json.map((e) => Location.fromJson(e)).toList();
+      } else {
+        throw errorMessageFromResponse(response.body);
+      }
+    });
+  }
+
+  Future<List<Category>> getCategories(Location location) {
+    // Uncomment for debug prints
+    // HttpWithMiddleware http = HttpWithMiddleware.build(middlewares: [
+    //   HttpLogger(logLevel: LogLevel.BODY),
+    // ]);
+    final url = Uri.parse(
+        "$_baseURL/moderators/company/locations/${location.name}/services");
+    return http.get(url, headers: header).then((response) {
+      if (response.statusCode == 200) {
+        final json = jsonDecode(response.body) as List<dynamic>;
+        return json.map((e) => Category.fromJson(e)).toList();
       } else {
         throw errorMessageFromResponse(response.body);
       }

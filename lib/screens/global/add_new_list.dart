@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sequence_manager/models/list/list_item.dart';
+import 'package:sequence_manager/models/list/location_list_item.dart';
+import 'package:sequence_manager/screens/moderator/categories_list.dart';
 
 // ignore: must_be_immutable
 class AddNewList extends StatefulWidget {
@@ -59,19 +61,38 @@ class AddNewListState extends State<AddNewList> {
                                   widget.updateItem(data[index]);
                                 } else if (value == "delete") {
                                   widget.deleteItem(data[index]);
+                                } else if (value == "categories") {
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (context) => CategoriesList(
+                                          location:
+                                              (data[index] as LocationListItem)
+                                                  .location),
+                                    ),
+                                  );
                                 }
                               },
                               itemBuilder: (context) {
-                                return const [
-                                  PopupMenuItem(
+                                final buttons = [
+                                  const PopupMenuItem(
                                     value: "update",
                                     child: Text("Edit"),
                                   ),
-                                  PopupMenuItem(
+                                  const PopupMenuItem(
                                     value: "delete",
                                     child: Text("Delete"),
                                   ),
                                 ];
+                                if (widget.title == "Locations") {
+                                  buttons.insert(
+                                    0,
+                                    const PopupMenuItem(
+                                      value: "categories",
+                                      child: Text("Edit categories"),
+                                    ),
+                                  );
+                                }
+                                return buttons;
                               },
                             ),
                             contentPadding: const EdgeInsets.all(0),
