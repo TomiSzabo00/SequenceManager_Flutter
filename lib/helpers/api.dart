@@ -207,8 +207,7 @@ class API {
     return ManagerData(email: email, name: "name");
   }
 
-  Future<void> createCompany(
-      String name, List<String> emails) async {
+  Future<void> createCompany(String name, List<String> emails) async {
     // HttpWithMiddleware http = HttpWithMiddleware.build(middlewares: [
     //   HttpLogger(logLevel: LogLevel.BODY),
     // ]);
@@ -226,6 +225,30 @@ class API {
       throw errorMessageFromResponse(response.body);
     }
   }
+
+  Future<void> updateUserRole(String email, UserType type) async {
+    // HttpWithMiddleware http = HttpWithMiddleware.build(middlewares: [
+    //   HttpLogger(logLevel: LogLevel.BODY),
+    // ]);
+    final url = Uri.parse("$_baseURL/admin/manage-user");
+    final body = {
+      "email": email,
+      "role": type.jsonName,
+    };
+    final response =
+        await http.patch(url, body: jsonEncode(body), headers: header);
+
+    if (response.statusCode == 200) {
+      return;
+    } else {
+      throw errorMessageFromResponse(response.body);
+    }
+  }
+
+
+
+
+  // MARK: Helpers
 
   String errorMessageFromResponse(String response) {
     if (response.isEmpty) {

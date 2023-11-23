@@ -47,6 +47,21 @@ enum UserType {
     }
   }
 
+  String get jsonName {
+    switch (this) {
+      case UserType.user:
+        return "CUSTOMER";
+      case UserType.worker:
+        return "EMPLOYEE";
+      case UserType.manager:
+        return "COMPANY_MODERATOR";
+      case UserType.admin:
+        return "ADMIN";
+      default:
+        return "CUSTOMER";
+    }
+  }
+
   String get name {
     switch (this) {
       case UserType.user:

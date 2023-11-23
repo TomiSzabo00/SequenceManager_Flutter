@@ -1,4 +1,7 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
+import 'package:sequence_manager/helpers/api.dart';
 import 'package:sequence_manager/models/user.dart';
 
 class ManageUsersScreen extends StatefulWidget {
@@ -68,8 +71,22 @@ class ManageUsersScreenState extends State<ManageUsersScreen> {
                 child: ElevatedButton(
                   onPressed: _emailController.text.isEmpty
                       ? null
-                      : () {
-                          // Handle add new user
+                      : () async {
+                          try {
+                            await API.instance.updateUserRole(
+                                _emailController.text, _category);
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text("User role updated"),
+                              ),
+                            );
+                          } catch (e) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(e.toString()),
+                              ),
+                            );
+                          }
                         },
                   child: const Text("Save"),
                 ),
