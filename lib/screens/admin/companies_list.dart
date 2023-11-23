@@ -40,6 +40,7 @@ class CompaniesListState extends State<CompaniesList> {
         )
             .then((_) {
           setState(() {
+            viewModel.reset();
             fetchCompanies = Provider.of<AdminViewModel>(context, listen: false)
                 .fetchCompanies();
           });
@@ -49,7 +50,15 @@ class CompaniesListState extends State<CompaniesList> {
       addNewItem: () {
         Navigator.of(context).push(
           MaterialPageRoute(
-            builder: (context) => const NewCompanyScreen(),
+            builder: (context) => NewCompanyScreen(doneAction: () {
+              Navigator.of(context).pop();
+              setState(() {
+                viewModel.reset();
+                fetchCompanies =
+                    Provider.of<AdminViewModel>(context, listen: false)
+                        .fetchCompanies();
+              });
+            }),
           ),
         );
       },

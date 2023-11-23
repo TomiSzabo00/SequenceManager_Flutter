@@ -192,6 +192,41 @@ class API {
     }
   }
 
+  Future<ManagerData> getManagerData(String email) async {
+    // HttpWithMiddleware http = HttpWithMiddleware.build(middlewares: [
+    //   HttpLogger(logLevel: LogLevel.BODY),
+    // ]);
+    final url = Uri.parse("$_baseURL/admin/moderators/$email");
+    final response = await http.get(url, headers: header);
+
+    // if (response.statusCode == 200) {
+    //   return ManagerData.fromJson(jsonDecode(response.body));
+    // } else {
+    //   throw errorMessageFromResponse(response.body);
+    // }
+    return ManagerData(email: email, name: "name");
+  }
+
+  Future<void> createCompany(
+      String name, List<String> emails) async {
+    // HttpWithMiddleware http = HttpWithMiddleware.build(middlewares: [
+    //   HttpLogger(logLevel: LogLevel.BODY),
+    // ]);
+    final url = Uri.parse("$_baseURL/admin/companies");
+    final body = {
+      "companyName": name,
+      "employeeEmailList": emails,
+    };
+    final response =
+        await http.post(url, body: jsonEncode(body), headers: header);
+
+    if (response.statusCode == 201) {
+      return;
+    } else {
+      throw errorMessageFromResponse(response.body);
+    }
+  }
+
   String errorMessageFromResponse(String response) {
     if (response.isEmpty) {
       return "Something went wrong";

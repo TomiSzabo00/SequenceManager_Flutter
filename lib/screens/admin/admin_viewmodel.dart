@@ -56,10 +56,27 @@ class AdminViewModel extends AlertViewModel {
     });
   }
 
-  void addCompany() {
+  void createCompany() {
     validateName();
     if (!isNameValid) {
       return;
+    }
+    if (managers.isEmpty) {
+      alertMessage = "Please add at least one manager";
+      notifyListeners();
+      return;
+    }
+
+    try {
+      API.instance
+          .createCompany(
+              nameController.text, managers.map((e) => e.user.email).toList())
+          .then((value) {});
+      reset();
+    } catch (e) {
+      alertMessage = e.toString();
+      notifyListeners();
+      rethrow;
     }
   }
 
@@ -89,5 +106,34 @@ class AdminViewModel extends AlertViewModel {
       alertMessage = e.toString();
       notifyListeners();
     }
+  }
+
+  void reset() {
+    nameController.text = "";
+    emailController.text = "";
+    managers = [];
+    isNameValid = true;
+    alertMessage = null;
+    notifyListeners();
+  }
+
+  void addNewManagerCreatingCompany() {
+    try {
+      API.instance.getManagerData(emailController.text).then((value) {
+        managers.add(UserListItem(
+            user: User(
+                name: value.name, email: value.email, type: UserType.manager)));
+        notifyListeners();
+      });
+    } catch (e) {
+      alertMessage = e.toString();
+      notifyListeners();
+    }
+    emailController.text = "";
+  }
+
+  void removeManagerCreatingCompany(UserListItem manager) {
+    managers.remove(manager);
+    notifyListeners();
   }
 }
