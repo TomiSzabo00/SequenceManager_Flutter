@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:sequence_manager/screens/user/user_waiting_viewmodel.dart';
+import 'package:sequence_manager/models/sequence.dart';
 
 class UserWaitingScreen extends StatelessWidget {
-
-  const UserWaitingScreen({super.key});
+  const UserWaitingScreen({super.key, required this.sequence});
+  final Sequence sequence;
 
   @override
   Widget build(BuildContext context) {
-    final viewModel = context.watch<UserWaitingViewModel>();
+    // final viewModel = context.watch<UserViewModel>();
     return Scaffold(
       appBar: AppBar(
-        title:const Text("Stand in line"),
+        title: const Text("Stand in line"),
       ),
       body: Center(
         child: Column(
@@ -19,20 +18,20 @@ class UserWaitingScreen extends StatelessWidget {
           children: <Widget>[
             const Text("Your number:"),
             Text(
-              viewModel.getNumber.toString(),
+              sequence.sequence.toString(),
               style: const TextStyle(fontSize: 50),
             ),
             Text(
-              viewModel.getPeopleAhead <= 0
+              sequence.queueUsersCount <= 1
                   ? "Go to the counter"
-                  : "${viewModel.getPeopleAhead} people are ahead of you",
+                  : "${sequence.queueUsersCount - 1} people are ahead of you",
               style: const TextStyle(fontSize: 16),
             ),
             const Padding(
               padding: EdgeInsets.only(top: 30),
             ),
             Text(
-              viewModel.getPlace,
+              sequence.location,
               style: const TextStyle(fontSize: 16),
             ),
             FractionallySizedBox(
@@ -40,9 +39,7 @@ class UserWaitingScreen extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 10.0),
                 child: ElevatedButton(
-                  onPressed: () {
-                    viewModel.delete();
-                  },
+                  onPressed: () {},
                   child: const Text("Delete"),
                 ),
               ),

@@ -9,8 +9,7 @@ import 'package:sequence_manager/screens/employee/new_employee_viewmodel.dart';
 import 'package:sequence_manager/screens/location/edit_location_viewmodel.dart';
 import 'package:sequence_manager/screens/location/new_location_viewmodel.dart';
 import 'package:sequence_manager/screens/moderator/moderator_viewmodel.dart';
-import 'package:sequence_manager/screens/user/user_get_number_viewmodel.dart';
-import 'package:sequence_manager/screens/user/user_waiting_viewmodel.dart';
+import 'package:sequence_manager/screens/user/user_viewmodel.dart';
 
 var providers = [
   ChangeNotifierProvider<EditCategoryViewModel>(
@@ -26,12 +25,9 @@ var providers = [
       create: (_) => EditLocationViewModel()),
   ChangeNotifierProvider<NewLocationViewModel>(
       create: (_) => NewLocationViewModel()),
-  ChangeNotifierProvider<UserGetNumberViewModel>(
-      create: (_) => UserGetNumberViewModel()),
-  ChangeNotifierProvider<UserWaitingViewModel>(
-      create: (_) => UserWaitingViewModel()),
   ChangeNotifierProvider<AuthViewModel>(create: (_) => AuthViewModel()),
   ChangeNotifierProvider<AdminViewModel>(create: (_) => AdminViewModel()),
   ChangeNotifierProvider<ModeratorViewModel>(
       create: (_) => ModeratorViewModel()),
+  ChangeNotifierProvider<UserViewModel>(create: (_) => UserViewModel()),
 ];

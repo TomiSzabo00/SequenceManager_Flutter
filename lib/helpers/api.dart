@@ -4,6 +4,7 @@ import 'package:sequence_manager/models/company.dart';
 import 'package:sequence_manager/models/employee.dart';
 import 'package:sequence_manager/models/helper/manager_data.dart';
 import 'package:sequence_manager/models/location.dart';
+import 'package:sequence_manager/models/sequence.dart';
 import 'package:sequence_manager/models/user.dart';
 import 'package:http/http.dart' as http;
 import 'package:pretty_http_logger/pretty_http_logger.dart';
@@ -245,6 +246,73 @@ class API {
     }
   }
 
+  Future<List<Company>> getCompaniesForUser() async {
+    final url = Uri.parse("$_baseURL/users/companies");
+    final response = await http.get(url, headers: header);
+
+    if (response.statusCode == 200) {
+      final json = jsonDecode(response.body) as Map<String, dynamic>;
+      final companies = json["companies"] as List<dynamic>;
+      return companies.map((e) => Company.fromString(e)).toList();
+    } else {
+      throw errorMessageFromResponse(response.body);
+    }
+  }
+
+  Future<List<Location>> getLocationsForCompanyForUser(Company company) async {
+    final url = Uri.parse("$_baseURL/users/locations");
+    final body = {
+      "company": company.name,
+    };
+    final response =
+        await http.post(url, body: jsonEncode(body), headers: header);
+
+    if (response.statusCode == 200) {
+      final json = jsonDecode(response.body) as Map<String, dynamic>;
+      final locations = json["locations"] as List<dynamic>;
+      return locations.map((e) => Location.fromString(e)).toList();
+    } else {
+      throw errorMessageFromResponse(response.body);
+    }
+  }
+
+  Future<List<Category>> getCategoriesForLocationForUser(
+      Company company, Location location) async {
+    final url = Uri.parse("$_baseURL/users/services");
+    final body = {
+      "company": company.name,
+      "location": location.name,
+    };
+    final response =
+        await http.post(url, body: jsonEncode(body), headers: header);
+
+    if (response.statusCode == 200) {
+      final json = jsonDecode(response.body) as Map<String, dynamic>;
+      final categories = json["services"] as List<dynamic>;
+      return categories.map((e) => Category.fromString(e)).toList();
+    } else {
+      throw errorMessageFromResponse(response.body);
+    }
+  }
+
+  Future<Sequence> getSequenceForUser(
+      Company company, Location location, Category category) async {
+    final url = Uri.parse("$_baseURL/users/sequence");
+    final body = {
+      "company": company.name,
+      "location": location.name,
+      "service": category.name,
+    };
+    final response =
+        await http.post(url, body: jsonEncode(body), headers: header);
+
+    if (response.statusCode == 200) {
+      final json = jsonDecode(response.body) as Map<String, dynamic>;
+      return Sequence.fromJson(json);
+    } else {
+      throw errorMessageFromResponse(response.body);
+    }
+  }
 
 
 

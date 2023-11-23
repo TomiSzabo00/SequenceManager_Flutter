@@ -10,4 +10,8 @@ class Category {
       name: json['service'] as String,
     );
   }
+
+  factory Category.fromString(String? name) {
+    return Category(name: name ?? "");
+  }
 }
