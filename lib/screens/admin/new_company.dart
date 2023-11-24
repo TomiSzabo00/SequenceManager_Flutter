@@ -138,8 +138,12 @@ class NewCompanyScreenState extends State<NewCompanyScreen> {
             ),
             TextButton(
               onPressed: () {
-                context.read<AdminViewModel>().addNewManagerCreatingCompany();
                 Navigator.of(context).pop();
+                try {
+                  context.read<AdminViewModel>().addNewManagerCreatingCompany();
+                } catch (e) {
+                  return;
+                }
               },
               child: const Text("Add"),
             ),

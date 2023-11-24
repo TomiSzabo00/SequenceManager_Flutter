@@ -197,15 +197,14 @@ class API {
     // HttpWithMiddleware http = HttpWithMiddleware.build(middlewares: [
     //   HttpLogger(logLevel: LogLevel.BODY),
     // ]);
-    final url = Uri.parse("$_baseURL/admin/moderators/$email");
-    final response = await http.get(url, headers: header);
+    final url = Uri.parse("$_baseURL/admin/emails/$email/validate");
+    final response = await http.post(url, headers: header);
 
-    // if (response.statusCode == 200) {
-    //   return ManagerData.fromJson(jsonDecode(response.body));
-    // } else {
-    //   throw errorMessageFromResponse(response.body);
-    // }
-    return ManagerData(email: email, name: "name");
+    if (response.statusCode == 200) {
+      return ManagerData.fromJson(jsonDecode(response.body));
+    } else {
+      throw errorMessageFromResponse(response.body);
+    }
   }
 
   Future<void> createCompany(String name, List<String> emails) async {

@@ -113,13 +113,12 @@ class AdminViewModel extends AlertViewModel {
     emailController.text = "";
     managers = [];
     isNameValid = true;
-    alertMessage = null;
     notifyListeners();
   }
 
-  void addNewManagerCreatingCompany() {
+  void addNewManagerCreatingCompany() async {
     try {
-      API.instance.getManagerData(emailController.text).then((value) {
+      await API.instance.getManagerData(emailController.text).then((value) {
         managers.add(UserListItem(
             user: User(
                 name: value.name, email: value.email, type: UserType.manager)));
@@ -128,6 +127,7 @@ class AdminViewModel extends AlertViewModel {
     } catch (e) {
       alertMessage = e.toString();
       notifyListeners();
+      rethrow;
     }
     emailController.text = "";
   }
