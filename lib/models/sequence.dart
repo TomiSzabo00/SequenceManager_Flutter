@@ -1,7 +1,7 @@
 class Sequence {
-  int sequence;
-  int queueUsersCount;
-  String location;
+  int? sequence;
+  int? queueUsersCount;
+  String? location;
   String name;
   String email;
   String role;

@@ -4,7 +4,6 @@ import 'package:sequence_manager/models/user.dart';
 import 'package:sequence_manager/screens/global/alert_wrapper.dart';
 import 'package:sequence_manager/screens/global/app_bar_with_name.dart';
 import 'package:sequence_manager/screens/user/user_viewmodel.dart';
-import 'package:sequence_manager/screens/user/user_waiting_screen.dart';
 
 class UserGetNumberScreen extends StatefulWidget {
   const UserGetNumberScreen({super.key, required this.user, this.onLogout});
@@ -138,14 +137,8 @@ class UserGetNumberScreenState extends State<UserGetNumberScreen> {
                           child: ElevatedButton(
                             onPressed: () async {
                               try {
-                                final sequence = await viewModel.getNumber();
+                                await viewModel.getNumber();
                                 viewModel.reset();
-                                // ignore: use_build_context_synchronously
-                                Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                      builder: (context) => UserWaitingScreen(
-                                          sequence: sequence)),
-                                );
                               } catch (e) {
                                 return;
                               }

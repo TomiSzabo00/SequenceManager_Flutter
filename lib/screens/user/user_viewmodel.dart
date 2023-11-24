@@ -18,6 +18,12 @@ class UserViewModel extends AlertViewModel {
       selectedLocation != null &&
       selectedCategory != null;
 
+  Sequence? sequence;
+
+  Stream<Sequence?> listenToSequence() async* {
+    yield sequence;
+  }
+
   Future<List<String>> fetchCompanies() async {
     try {
       return API.instance.getCompaniesForUser().then((value) {
@@ -82,10 +88,34 @@ class UserViewModel extends AlertViewModel {
     notifyListeners();
   }
 
-  Future<Sequence> getNumber() async {
+  Future<void> getNumber() async {
     try {
-      return await API.instance.getSequenceForUser(
+      sequence = await API.instance.getSequenceForUser(
           selectedCompany!, selectedLocation!, selectedCategory!);
+      notifyListeners();
+    } catch (e) {
+      alertMessage = e.toString();
+      notifyListeners();
+      rethrow;
+    }
+  }
+
+  Future<void> deleteNumber() async {
+    try {
+      await API.instance.deleteSequenceForUser();
+      sequence = null;
+      notifyListeners();
+    } catch (e) {
+      alertMessage = e.toString();
+      notifyListeners();
+      rethrow;
+    }
+  }
+
+  Future<void> getUserSequence() async {
+    try {
+      sequence = await API.instance.getUserDashboard();
+      notifyListeners();
     } catch (e) {
       alertMessage = e.toString();
       notifyListeners();

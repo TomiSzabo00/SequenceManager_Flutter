@@ -60,9 +60,9 @@ class API {
 
   Future<List<Location>> getLocations() {
     // Uncomment for debug prints
-     HttpWithMiddleware http = HttpWithMiddleware.build(middlewares: [
-       HttpLogger(logLevel: LogLevel.BODY),
-     ]);
+    // HttpWithMiddleware http = HttpWithMiddleware.build(middlewares: [
+    //   HttpLogger(logLevel: LogLevel.BODY),
+    // ]);
     final url = Uri.parse("$_baseURL/moderators/company/locations");
     return http.get(url, headers: header).then((response) {
       if (response.statusCode == 200) {
@@ -141,9 +141,9 @@ class API {
   }
 
   Future<void> removeManager(Company company, ManagerData manager) async {
-    HttpWithMiddleware http = HttpWithMiddleware.build(middlewares: [
-      HttpLogger(logLevel: LogLevel.BODY),
-    ]);
+    // HttpWithMiddleware http = HttpWithMiddleware.build(middlewares: [
+    //   HttpLogger(logLevel: LogLevel.BODY),
+    // ]);
     final url = Uri.parse(
         "$_baseURL/admin/companies/${company.name}/moderators/${manager.email}");
     final response = await http.delete(url, headers: header);
@@ -314,9 +314,9 @@ class API {
   }
 
   Future<void> removeCategory(Location location, Category category) async {
-    HttpWithMiddleware http = HttpWithMiddleware.build(middlewares: [
-      HttpLogger(logLevel: LogLevel.BODY),
-    ]);
+    // HttpWithMiddleware http = HttpWithMiddleware.build(middlewares: [
+    //   HttpLogger(logLevel: LogLevel.BODY),
+    // ]);
     final url = Uri.parse(
         "$_baseURL/moderators/company/locations/${location.name}/services/${category.name}");
     final response = await http.delete(url, headers: header);
@@ -329,11 +329,8 @@ class API {
   }
 
   Future<void> removeLocation(Location location) async {
-    HttpWithMiddleware http = HttpWithMiddleware.build(middlewares: [
-      HttpLogger(logLevel: LogLevel.BODY),
-    ]);
-    final url = Uri.parse(
-        "$_baseURL/moderators/company/locations/${location.name}");
+    final url =
+        Uri.parse("$_baseURL/moderators/company/locations/${location.name}");
     final response = await http.delete(url, headers: header);
 
     if (response.statusCode == 200) {
@@ -343,30 +340,14 @@ class API {
     }
   }
 
- Future<void> updateLocation(Location location, String text) async {
-   final url = Uri.parse("$_baseURL/moderators/company/locations");
-   final body = {
-     "previousLocationName": location.name,
-     "newLocationName": text
-   };
-   final response =
-   await http.patch(url, body: jsonEncode(body), headers: header);
-
-   if (response.statusCode == 200) {
-     return;
-   } else {
-     throw errorMessageFromResponse(response.body);
-   }
- }
-
-  Future<void> updateCategory(Location location, Category category, String text) async {
-    final url = Uri.parse("$_baseURL/moderators/company/locations/${location.name}/services");
+  Future<void> updateLocation(Location location, String text) async {
+    final url = Uri.parse("$_baseURL/moderators/company/locations");
     final body = {
-      "previousServiceName": category.name,
-      "newServiceName": text
+      "previousLocationName": location.name,
+      "newLocationName": text
     };
     final response =
-    await http.patch(url, body: jsonEncode(body), headers: header);
+        await http.patch(url, body: jsonEncode(body), headers: header);
 
     if (response.statusCode == 200) {
       return;
@@ -374,6 +355,50 @@ class API {
       throw errorMessageFromResponse(response.body);
     }
   }
+
+  Future<void> updateCategory(
+      Location location, Category category, String text) async {
+    final url = Uri.parse(
+        "$_baseURL/moderators/company/locations/${location.name}/services");
+    final body = {"previousServiceName": category.name, "newServiceName": text};
+    final response =
+        await http.patch(url, body: jsonEncode(body), headers: header);
+
+    if (response.statusCode == 200) {
+      return;
+    } else {
+      throw errorMessageFromResponse(response.body);
+    }
+  }
+
+  Future<void> deleteSequenceForUser() async {
+    // HttpWithMiddleware http = HttpWithMiddleware.build(middlewares: [
+    //   HttpLogger(logLevel: LogLevel.BODY),
+    // ]);
+    final url = Uri.parse("$_baseURL/users/sequence");
+    final response = await http.delete(url, headers: header);
+
+    if (response.statusCode == 204) {
+      return;
+    } else {
+      throw errorMessageFromResponse(response.body);
+    }
+  }
+
+  Future<Sequence> getUserDashboard() async {
+    final url = Uri.parse("$_baseURL/users");
+    final response = await http.get(url, headers: header);
+
+    if (response.statusCode == 200) {
+      final json = jsonDecode(response.body) as Map<String, dynamic>;
+      return Sequence.fromJson(json);
+    } else {
+      throw errorMessageFromResponse(response.body);
+    }
+  }
+
+
+
 
   // MARK: Helpers
 
@@ -393,5 +418,4 @@ class API {
           (index == -1) ? rawCookie : rawCookie.substring(0, index);
     }
   }
-
 }

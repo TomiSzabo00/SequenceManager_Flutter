@@ -8,7 +8,7 @@ import 'package:sequence_manager/screens/employee/worker_screen.dart';
 import 'package:sequence_manager/screens/global/alert_wrapper.dart';
 import 'package:sequence_manager/screens/admin/admin_menu.dart';
 import 'package:sequence_manager/screens/moderator/moderator_menu.dart';
-import 'package:sequence_manager/screens/user/user_get_number_screen.dart';
+import 'package:sequence_manager/screens/user/user_manager_screen.dart';
 
 class AuthManager extends StatefulWidget {
   const AuthManager({Key? key}) : super(key: key);
@@ -46,7 +46,7 @@ class AuthManagerState extends State<AuthManager> {
                         user: viewModel.loggedInUser ?? User.empty(),
                         onLogout: viewModel.logout);
                   case UserType.user:
-                    return UserGetNumberScreen(
+                    return UserManagerScreen(
                         user: viewModel.loggedInUser ?? User.empty(),
                         onLogout: viewModel.logout);
                   case UserType.worker:
