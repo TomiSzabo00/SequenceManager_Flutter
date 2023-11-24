@@ -60,9 +60,9 @@ class API {
 
   Future<List<Location>> getLocations() {
     // Uncomment for debug prints
-    // HttpWithMiddleware http = HttpWithMiddleware.build(middlewares: [
-    //   HttpLogger(logLevel: LogLevel.BODY),
-    // ]);
+     HttpWithMiddleware http = HttpWithMiddleware.build(middlewares: [
+       HttpLogger(logLevel: LogLevel.BODY),
+     ]);
     final url = Uri.parse("$_baseURL/moderators/company/locations");
     return http.get(url, headers: header).then((response) {
       if (response.statusCode == 200) {
@@ -313,7 +313,67 @@ class API {
     }
   }
 
+  Future<void> removeCategory(Location location, Category category) async {
+    HttpWithMiddleware http = HttpWithMiddleware.build(middlewares: [
+      HttpLogger(logLevel: LogLevel.BODY),
+    ]);
+    final url = Uri.parse(
+        "$_baseURL/moderators/company/locations/${location.name}/services/${category.name}");
+    final response = await http.delete(url, headers: header);
 
+    if (response.statusCode == 200) {
+      return;
+    } else {
+      throw errorMessageFromResponse(response.body);
+    }
+  }
+
+  Future<void> removeLocation(Location location) async {
+    HttpWithMiddleware http = HttpWithMiddleware.build(middlewares: [
+      HttpLogger(logLevel: LogLevel.BODY),
+    ]);
+    final url = Uri.parse(
+        "$_baseURL/moderators/company/locations/${location.name}");
+    final response = await http.delete(url, headers: header);
+
+    if (response.statusCode == 200) {
+      return;
+    } else {
+      throw errorMessageFromResponse(response.body);
+    }
+  }
+
+ Future<void> updateLocation(Location location, String text) async {
+   final url = Uri.parse("$_baseURL/moderators/company/locations");
+   final body = {
+     "previousLocationName": location.name,
+     "newLocationName": text
+   };
+   final response =
+   await http.patch(url, body: jsonEncode(body), headers: header);
+
+   if (response.statusCode == 200) {
+     return;
+   } else {
+     throw errorMessageFromResponse(response.body);
+   }
+ }
+
+  Future<void> updateCategory(Location location, Category category, String text) async {
+    final url = Uri.parse("$_baseURL/moderators/company/locations/${location.name}/services");
+    final body = {
+      "previousServiceName": category.name,
+      "newServiceName": text
+    };
+    final response =
+    await http.patch(url, body: jsonEncode(body), headers: header);
+
+    if (response.statusCode == 200) {
+      return;
+    } else {
+      throw errorMessageFromResponse(response.body);
+    }
+  }
 
   // MARK: Helpers
 
@@ -333,4 +393,5 @@ class API {
           (index == -1) ? rawCookie : rawCookie.substring(0, index);
     }
   }
+
 }

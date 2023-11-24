@@ -7,6 +7,8 @@ import 'package:sequence_manager/screens/location/edit_location.dart';
 import 'package:sequence_manager/screens/location/new_location.dart';
 import 'package:sequence_manager/screens/moderator/moderator_viewmodel.dart';
 
+import '../../models/list/location_list_item.dart';
+
 class LocationsList extends StatefulWidget {
   const LocationsList({super.key});
 
@@ -32,12 +34,17 @@ class LocationsListState extends State<LocationsList> {
       builder: (_, __) => AddNewList(
         title: "Locations",
         fetchItems: fetchLocations,
-        updateItem: (item) {
+        updateItem: (location) {
           Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => EditLocationScreen()),
+            MaterialPageRoute(builder: (context) => EditLocationScreen(
+                location : (location as LocationListItem).location
+              ),
+            ),
           );
         },
-        deleteItem: viewModel.deleteLocation,
+        deleteItem: (location) {
+          viewModel.deleteLocation((location as LocationListItem).location);
+        },
         addNewItem: () {
           Navigator.of(context).push(
             MaterialPageRoute(builder: (context) => NewLocationScreen()),

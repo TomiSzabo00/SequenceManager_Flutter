@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'new_location_viewmodel.dart';
+import '../moderator/moderator_viewmodel.dart';
 
 class NewLocationScreen extends StatelessWidget {
   final TextEditingController textController = TextEditingController();
@@ -10,7 +10,7 @@ class NewLocationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final viewModel = context.watch<NewLocationViewModel>();
+    final viewModel = context.watch<ModeratorViewModel>();
     return Scaffold(
       appBar: AppBar(
         title: const Text("Add new location"),
@@ -27,14 +27,11 @@ class NewLocationScreen extends StatelessWidget {
                   labelText: "Name of new location",
 
                 ),
-                onChanged: (value) {
-                  viewModel.setName(value);
-                },
               ),
               const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
-                  viewModel.save();
+
                 },
                 child: const Text("Save"),
               ),

@@ -1,5 +1,5 @@
 class Category {
-  final String name;
+  String name;
 
   Category({
     required this.name,

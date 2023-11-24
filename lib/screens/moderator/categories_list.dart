@@ -7,6 +7,8 @@ import 'package:sequence_manager/screens/category/new_category.dart';
 import 'package:sequence_manager/screens/global/add_new_list.dart';
 import 'package:sequence_manager/screens/moderator/moderator_viewmodel.dart';
 
+import '../../models/list/category_list_item.dart';
+
 class CategoriesList extends StatefulWidget {
   const CategoriesList({Key? key, required this.location}) : super(key: key);
   final Location location;
@@ -31,15 +33,22 @@ class CategoriesListState extends State<CategoriesList> {
     return AddNewList(
       title: "Categories",
       fetchItems: fetchCategories,
-      updateItem: (item) {
+      updateItem: (category) {
         Navigator.of(context).push(
-          MaterialPageRoute(builder: (context) => EditCategoryScreen()),
+          MaterialPageRoute(builder: (context) => EditCategoryScreen(
+              location: widget.location,
+              category: (category as CategoryListItem).category,
+          )),
         );
       },
-      deleteItem: viewModel.deleteCategory,
+      deleteItem: (category) {
+        viewModel.deleteCategory(widget.location, (category as CategoryListItem).category);
+      },
       addNewItem: () {
         Navigator.of(context).push(
-          MaterialPageRoute(builder: (context) => NewCategoryScreen()),
+          MaterialPageRoute(builder: (context) => NewCategoryScreen(
+
+          )),
         );
       },
     );

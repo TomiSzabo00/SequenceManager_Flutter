@@ -1,42 +1,58 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sequence_manager/screens/location/edit_location_viewmodel.dart';
 
-class EditLocationScreen extends StatelessWidget {
-  final TextEditingController textController = TextEditingController();
+import '../../models/location.dart';
+import '../global/alert_wrapper.dart';
+import '../moderator/moderator_viewmodel.dart';
 
-  EditLocationScreen({super.key});
+class EditLocationScreen extends StatefulWidget {
+  const EditLocationScreen({Key? key, required this.location})
+      : super(key: key);
+  final Location location;
+
+  @override
+  EditLocationScreenState createState() => EditLocationScreenState();
+}
+
+class EditLocationScreenState extends State<EditLocationScreen> {
+  @override
+  void initState() {
+    super.initState();
+    Provider.of<ModeratorViewModel>(context, listen: false);
+  }
 
   @override
   Widget build(BuildContext context) {
-    final viewModel = context.watch<EditLocationViewModel>();
+    final viewModel = Provider.of<ModeratorViewModel>(context);
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Edit location"),
+        title: const Text("Edit category"),
       ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              TextField(
-                controller: textController,
-                decoration: InputDecoration(
-                  labelText: "New location instead of ${viewModel.getName}",
+      body: AlertWrapper<ModeratorViewModel>(
+        viewModel: viewModel,
+        builder: (context, _) => Center(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                TextField(
+                  controller: viewModel.locationController,
+                  decoration: InputDecoration(
+                    labelText: "New",
+                  ),
                 ),
-                onChanged: (value) {
-                  viewModel.setName(value);
-                },
-              ),
-              const SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () {
-                  viewModel.save();
-                },
-                child: const Text("Save"),
-              ),
-            ],
+                const SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: () {
+                    viewModel.updateLocation(widget.location);
+                    //TODO: Átirányítás
+                  },
+                  child: const Text("Save"),
+                ),
+              ],
+            ),
           ),
         ),
       ),
