@@ -61,7 +61,7 @@ class UserWaitingScreenState extends State<UserWaitingScreen> {
         Text(
           (sequence.queueUsersCount ?? 0) <= 1
               ? "Go to the counter"
-              : "${(sequence.queueUsersCount ?? 0) - 1} people are ahead of you",
+              : "${(sequence.queuePosition ?? 0) - 1} people are ahead of you",
           style: const TextStyle(fontSize: 16),
         ),
         const Padding(
