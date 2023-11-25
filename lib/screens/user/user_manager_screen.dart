@@ -36,7 +36,7 @@ class UserManagerScreenState extends State<UserManagerScreen> {
             return UserGetNumberScreen(
                 user: widget.user, onLogout: widget.onLogout);
           }
-          return UserWaitingScreen(sequence: sequence);
+          return UserWaitingScreen(sequence: sequence, user: widget.user);
         } else {
           return UserGetNumberScreen(
                 user: widget.user, onLogout: widget.onLogout);

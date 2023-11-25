@@ -13,6 +13,8 @@ class API {
   API._privateConstructor();
   static final API instance = API._privateConstructor();
 
+  bool _isConnectedToWebSocket = false;
+
   factory API() {
     return instance;
   }
@@ -397,8 +399,31 @@ class API {
     }
   }
 
+  // MARK: """Websocket"""
+  Stream<Sequence?> listenToSequenceChanges(User user) async* {
+    while (_isConnectedToWebSocket) {
+      print("Listening to sequence changes");
+      final url = Uri.parse("$_baseURL/users");
+      final response = await http.get(url, headers: header);
 
+      if (response.statusCode == 200) {
+        final json = jsonDecode(response.body) as Map<String, dynamic>;
+        yield Sequence.fromJson(json);
+      } else {
+        yield null;
+      }
 
+      await Future.delayed(const Duration(seconds: 1));
+    }
+  }
+
+  void connectToWebSocket() {
+    _isConnectedToWebSocket = true;
+  }
+
+  void disconnectFromWebSocket() {
+    _isConnectedToWebSocket = false;
+  }
 
   // MARK: Helpers
 
