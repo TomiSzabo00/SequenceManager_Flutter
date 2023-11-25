@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:sequence_manager/models/category.dart';
 import 'package:sequence_manager/models/company.dart';
 import 'package:sequence_manager/models/employee.dart';
+import 'package:sequence_manager/models/helper/employee_data.dart';
 import 'package:sequence_manager/models/helper/manager_data.dart';
 import 'package:sequence_manager/models/location.dart';
 import 'package:sequence_manager/models/sequence.dart';
@@ -405,6 +406,30 @@ class API {
 
     if (response.statusCode == 204) {
       return;
+    } else {
+      throw errorMessageFromResponse(response.body);
+    }
+  }
+
+  Future<EmployeeData> fetchEmployeeData() async {
+    final url = Uri.parse("$_baseURL/employees");
+    final response = await http.get(url, headers: header);
+
+    if (response.statusCode == 200) {
+      final json = jsonDecode(response.body) as Map<String, dynamic>;
+      return EmployeeData.fromJson(json);
+    } else {
+      throw errorMessageFromResponse(response.body);
+    }
+  }
+
+  Future<EmployeeData> callNextCustomer() async {
+    final url = Uri.parse("$_baseURL/employees/call-next");
+    final response = await http.post(url, headers: header);
+
+    if (response.statusCode == 200) {
+      final json = jsonDecode(response.body) as Map<String, dynamic>;
+      return EmployeeData.fromJson(json);
     } else {
       throw errorMessageFromResponse(response.body);
     }

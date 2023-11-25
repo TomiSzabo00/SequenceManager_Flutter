@@ -1,24 +1,25 @@
-import 'package:flutter/material.dart';
+import 'package:sequence_manager/helpers/api.dart';
+import 'package:sequence_manager/models/helper/employee_data.dart';
+import 'package:sequence_manager/screens/global/alert_viewmodel.dart';
 
-class EmployeeViewModel extends ChangeNotifier {
-  int _calledNumber= 0;
-  String _place= "";
-
-  int get getCalledNumber => _calledNumber;
-
-  void setCalledNumber(int calledNumber){
-    _calledNumber=calledNumber;
-    notifyListeners();
+class EmployeeViewModel extends AlertViewModel {
+  Future<EmployeeData?> fetchEmployeeData() async {
+    try {
+      return await API.instance.fetchEmployeeData();
+    } catch (e) {
+      alertMessage = e.toString();
+      notifyListeners();
+      return null;
+    }
   }
 
-  String get getPlace => _place;
-
-  void setPlace(String place){
-    _place=place;
-    notifyListeners();
-  }
-
-  void next(){
-
+  Future<EmployeeData?> callNext() async {
+    try {
+      return await API.instance.callNextCustomer();
+    } catch (e) {
+      alertMessage = e.toString();
+      notifyListeners();
+      return null;
+    }
   }
 }
