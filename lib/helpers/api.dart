@@ -50,6 +50,32 @@ class API {
     }
   }
 
+  Future<void> register(
+      String name, String email, String password, String passwordAgain) async {
+    // Uncomment for debug prints
+    // HttpWithMiddleware http = HttpWithMiddleware.build(middlewares: [
+    //   HttpLogger(logLevel: LogLevel.BODY),
+    // ]);
+
+    final url = Uri.parse("$_baseURL/auth/register");
+    final body = {
+      "name": name,
+      "email": email,
+      "password": password,
+      "confirmPassword": passwordAgain,
+    };
+
+    final response =
+        await http.post(url, body: jsonEncode(body), headers: header);
+
+    if (response.statusCode == 201) {
+      updateCookie(response);
+      return;
+    } else {
+      throw errorMessageFromResponse(response.body);
+    }
+  }
+
   Future<void> logout() async {
     final url = Uri.parse("$_baseURL/auth/logout");
     final response = await http.delete(url, headers: header);

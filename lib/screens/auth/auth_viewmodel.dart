@@ -48,8 +48,8 @@ class AuthViewModel extends AlertViewModel {
     }
 
     try {
-      final user =
-          await API.instance.login(emailController.text, passwordController.text);
+      final user = await API.instance
+          .login(emailController.text, passwordController.text);
       loggedInUser = user;
     } catch (e) {
       alertMessage = e.toString();
@@ -57,7 +57,7 @@ class AuthViewModel extends AlertViewModel {
     notifyListeners();
   }
 
-  void register() {
+  void register() async {
     // check if name, email, password and password again is valid
     if (nameController.text.isEmpty) {
       isNameValid = false;
@@ -82,8 +82,18 @@ class AuthViewModel extends AlertViewModel {
       return;
     }
 
-    loggedInUser = User(name: "Test", email: "email@emial.com");
-    notifyListeners();
+    try {
+      await API.instance.register(nameController.text, emailController.text,
+          passwordController.text, passwordAgainController.text);
+      
+      final user = await API.instance
+          .login(emailController.text, passwordController.text);
+      loggedInUser = user;
+      notifyListeners();
+    } catch (e) {
+      alertMessage = e.toString();
+      notifyListeners();
+    }
   }
 
   void logout() async {
