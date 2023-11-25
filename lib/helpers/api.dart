@@ -399,6 +399,17 @@ class API {
     }
   }
 
+  Future<void> delteCompany(Company company) async {
+    final url = Uri.parse("$_baseURL/admin/companies/${company.name}");
+    final response = await http.delete(url, headers: header);
+
+    if (response.statusCode == 204) {
+      return;
+    } else {
+      throw errorMessageFromResponse(response.body);
+    }
+  }
+
   // MARK: """Websocket"""
   Stream<Sequence?> listenToSequenceChanges(User user) async* {
     while (_isConnectedToWebSocket) {

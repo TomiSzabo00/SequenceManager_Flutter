@@ -46,7 +46,14 @@ class CompaniesListState extends State<CompaniesList> {
           });
         });
       },
-      deleteItem: viewModel.deleteCompany,
+      deleteItem: (item) {
+        viewModel.deleteCompany(item).then((value) {
+          setState(() {
+            fetchCompanies = Provider.of<AdminViewModel>(context, listen: false)
+                .fetchCompanies();
+          });
+        });
+      },
       addNewItem: () {
         Navigator.of(context).push(
           MaterialPageRoute(

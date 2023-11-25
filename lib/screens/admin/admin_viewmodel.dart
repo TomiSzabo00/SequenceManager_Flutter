@@ -27,7 +27,14 @@ class AdminViewModel extends AlertViewModel {
     }
   }
 
-  void deleteCompany(ListItem item) {}
+  Future<void> deleteCompany(ListItem item) async {
+    try {
+      await API.instance.delteCompany((item as CompanyListItem).company);
+    } catch (e) {
+      alertMessage = e.toString();
+      notifyListeners();
+    }
+  }
 
   Future<List<UserListItem>> fetchManagers(Company company) async {
     try {
