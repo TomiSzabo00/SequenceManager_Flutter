@@ -20,8 +20,8 @@ class ModeratorViewModel extends AlertViewModel {
   Future<List<ListItem>> fetchLocations() async {
     try {
       return await API.instance.getLocations().then((value) {
-        locations = value.map((e) => LocationListItem(location: e)).toList();
-        return locations;
+        notifyListeners();
+        return locations = value.map((e) => LocationListItem(location: e)).toList();
       });
     } catch (e) {
       alertMessage = e.toString();
@@ -30,35 +30,11 @@ class ModeratorViewModel extends AlertViewModel {
     }
   }
 
-  Future<List<ListItem>> fetchCategories(Location location) async {
+  void deleteLocation(Location location) async {
     try {
-      return await API.instance.getCategories(location).then((value) {
-        categories = value.map((e) => CategoryListItem(category: e)).toList();
-        return categories;
-      });
-    } catch (e) {
-      alertMessage = e.toString();
-      notifyListeners();
-      return [];
-    }
-  }
-
-  Future<List<ListItem>> fetchEmployees() {
-    try {
-      return API.instance.getEmployees().then((value) {
-        return value.map((e) => EmployeeListItem(employee: e)).toList();
-      });
-    } catch (e) {
-      alertMessage = e.toString();
-      notifyListeners();
-      return Future.value([]);
-    }
-  }
-
-  void deleteLocation(Location item) {
-    try {
-      API.instance.removeLocation(item).then((value){
-        locations.removeWhere((element) => element.location.name == item.name);
+      await API.instance.deleteLocation(location).then((value){
+        notifyListeners();
+        locations.removeWhere((element)=>element.location.name==location.name);
       });
     } catch (e) {
       alertMessage = e.toString();
@@ -66,9 +42,9 @@ class ModeratorViewModel extends AlertViewModel {
     }
   }
 
-  void updateLocation(Location location){
+  void updateLocation(Location location) async {
     try {
-      API.instance.updateLocation(location, locationController.text).then((value) {
+      await API.instance.updateLocation(location, locationController.text).then((value) {
         location.name = locationController.text;
         notifyListeners();
       });
@@ -78,9 +54,36 @@ class ModeratorViewModel extends AlertViewModel {
     }
   }
 
-  void deleteCategory(Location location, Category category) {
+  Future<List<ListItem>> createLocation(String text) {
+    try{
+      return API.instance.createLocation(text).then((value) {
+        notifyListeners();
+        return locations = value.map((e) => LocationListItem(location: e)).toList();
+      });
+    } catch (e) {
+      alertMessage = e.toString();
+      notifyListeners();
+      return Future.value([]);
+    }
+  }
+
+  Future<List<ListItem>> fetchCategories(Location location) async {
     try {
-      API.instance.removeCategory(location, category).then((value){
+      return await API.instance.getCategories(location).then((value) {
+        notifyListeners();
+        return categories = value.map((e) => CategoryListItem(category: e)).toList();
+      });
+    } catch (e) {
+      alertMessage = e.toString();
+      notifyListeners();
+      return [];
+    }
+  }
+
+  void deleteCategory(Location location, Category category) async {
+    try {
+      await API.instance.deleteCategory(location, category).then((value){
+        notifyListeners();
         categories.removeWhere((element)=>element.category.name==category.name);
       });
     } catch (e) {
@@ -89,10 +92,11 @@ class ModeratorViewModel extends AlertViewModel {
     }
   }
 
-  void updateCategory(Location location, Category category){
+  void updateCategory(Location location, Category category) async {
     try {
-      API.instance.updateCategory(location, category, categoryController.text).then((value){
-        category.name=locationController.text;
+      await API.instance.updateCategory(location, category, categoryController.text).then((value){
+        category.name=categoryController.text;
+        notifyListeners();
       });
     } catch (e) {
       alertMessage = e.toString();
@@ -100,7 +104,37 @@ class ModeratorViewModel extends AlertViewModel {
     }
   }
 
+  Future<List<ListItem>> createCategory(Location location, String text) {
+    try{
+      return API.instance.createCategory(location, text).then((value) {
+        notifyListeners();
+        return categories = value.map((e) => CategoryListItem(category: e)).toList();
+      });
+    } catch (e) {
+      alertMessage = e.toString();
+      notifyListeners();
+      return Future.value([]);
+    }
+  }
+
+  Future<List<ListItem>> fetchEmployees() {
+    try {
+      return API.instance.getEmployees().then((value) {
+        notifyListeners();
+        return value.map((e) => EmployeeListItem(employee: e)).toList();
+      });
+    } catch (e) {
+      alertMessage = e.toString();
+      notifyListeners();
+      return Future.value([]);
+    }
+  }
+
   void deleteEmployee(ListItem item) {
+
+  }
+
+  void reset() {
 
   }
 }

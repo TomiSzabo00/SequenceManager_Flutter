@@ -342,12 +342,11 @@ class API {
     }
   }
 
-  Future<void> removeCategory(Location location, Category category) async {
-    // HttpWithMiddleware http = HttpWithMiddleware.build(middlewares: [
-    //   HttpLogger(logLevel: LogLevel.BODY),
-    // ]);
+  Future<void> deleteCategory(Location location, Category category) async {
+     
     final url = Uri.parse(
-        "$_baseURL/moderators/company/locations/${location.name}/services/${category.name}");
+        "$_baseURL/moderators/company/locations/${location.name}/services/${category.name}"
+    );
     final response = await http.delete(url, headers: header);
 
     if (response.statusCode == 200) {
@@ -357,16 +356,22 @@ class API {
     }
   }
 
-  Future<void> removeLocation(Location location) async {
-    final url =
-        Uri.parse("$_baseURL/moderators/company/locations/${location.name}");
-    final response = await http.delete(url, headers: header);
+  Future<void> deleteLocation(Location location) async {
 
-    if (response.statusCode == 200) {
-      return;
-    } else {
-      throw errorMessageFromResponse(response.body);
-    }
+      final url = Uri.parse(
+          "$_baseURL/moderators/company/locations/${location.name}"
+      );
+      final body = {
+        "location": location.name,
+      };
+      final response =
+        await http.delete(url, body: jsonEncode(body), headers: header);
+
+      if (response.statusCode == 200) {
+        return;
+      } else {
+        throw errorMessageFromResponse(response.body);
+      }
   }
 
   Future<void> updateLocation(Location location, String text) async {
@@ -409,6 +414,40 @@ class API {
 
     if (response.statusCode == 204) {
       return;
+    } else {
+      throw errorMessageFromResponse(response.body);
+    }
+  }
+
+  Future<List<Category>> createCategory(Location location, String name) async {
+    final url = Uri.parse("$_baseURL/moderators/company/locations/${location.name}/services");
+    final body = {
+      "service": name,
+    };
+    final response =
+    await http.post(url, body: jsonEncode(body), headers: header);
+
+    if (response.statusCode == 200) {
+      final json = jsonDecode(response.body) as Map<String, dynamic>;
+      final categories = json["services"] as List<dynamic>;
+      return categories.map((e) => Category.fromString(e)).toList();
+    } else {
+      throw errorMessageFromResponse(response.body);
+    }
+  }
+
+  Future<List<Location>> createLocation(String name) async {
+    final url = Uri.parse("$_baseURL/moderators/company/locations");
+    final body = {
+      "location": name,
+    };
+    final response =
+    await http.post(url, body: jsonEncode(body), headers: header);
+
+    if (response.statusCode == 200) {
+      final json = jsonDecode(response.body) as Map<String, dynamic>;
+      final locations = json["location"] as List<dynamic>;
+      return locations.map((e) => Location.fromString(e)).toList();
     } else {
       throw errorMessageFromResponse(response.body);
     }

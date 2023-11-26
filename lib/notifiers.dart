@@ -1,7 +1,6 @@
 import 'package:provider/provider.dart';
 import 'package:sequence_manager/screens/admin/admin_viewmodel.dart';
 import 'package:sequence_manager/screens/auth/auth_viewmodel.dart';
-import 'package:sequence_manager/screens/category/new_category_viewmodel.dart';
 import 'package:sequence_manager/screens/employee/edit_employee_viewmodel.dart';
 import 'package:sequence_manager/screens/employee/employee_viewmodel.dart';
 import 'package:sequence_manager/screens/employee/new_employee_viewmodel.dart';
@@ -9,8 +8,6 @@ import 'package:sequence_manager/screens/moderator/moderator_viewmodel.dart';
 import 'package:sequence_manager/screens/user/user_viewmodel.dart';
 
 var providers = [
-  ChangeNotifierProvider<NewCategoryViewModel>(
-      create: (_) => NewCategoryViewModel()),
   ChangeNotifierProvider<EditEmployeeViewModel>(
       create: (_) => EditEmployeeViewModel()),
   ChangeNotifierProvider<EmployeeViewModel>(create: (_) => EmployeeViewModel()),

@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'new_category_viewmodel.dart';
+import '../../models/location.dart';
+import '../moderator/moderator_viewmodel.dart';
 
 class NewCategoryScreen extends StatelessWidget {
-  final TextEditingController textController = TextEditingController();
-  final String name="";
 
-  NewCategoryScreen({super.key});
+    NewCategoryScreen({super.key, required this.location});
+
+    Location location;
 
   @override
   Widget build(BuildContext context) {
-    final viewModel = context.watch<NewCategoryViewModel>();
+    final viewModel = context.watch<ModeratorViewModel>();
     return Scaffold(
       appBar: AppBar(
         title: const Text("Add new category"),
@@ -23,16 +24,16 @@ class NewCategoryScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               TextField(
-                controller: textController,
+                controller: viewModel.categoryController,
                 decoration: const InputDecoration(
-                  labelText: "Category name",
+                  labelText: "Name",
                 ),
               ),
               const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
-                  viewModel.setName(textController.text);
-                  //TODO: redirect
+                  viewModel.createCategory(location, viewModel.categoryController.text);
+                  Navigator.of(context).pop();
                 },
                 child: const Text("Save"),
               ),

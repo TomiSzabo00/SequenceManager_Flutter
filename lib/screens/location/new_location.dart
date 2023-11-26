@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../models/location.dart';
 import '../moderator/moderator_viewmodel.dart';
 
 class NewLocationScreen extends StatelessWidget {
-  final TextEditingController textController = TextEditingController();
 
   NewLocationScreen({super.key});
 
@@ -22,16 +22,16 @@ class NewLocationScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               TextField(
-                controller: textController,
+                controller: viewModel.locationController,
                 decoration: const InputDecoration(
-                  labelText: "Name of new location",
-
+                  labelText: "Name",
                 ),
               ),
               const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
-
+                  viewModel.createLocation(viewModel.locationController.text);
+                  Navigator.of(context).pop();
                 },
                 child: const Text("Save"),
               ),
