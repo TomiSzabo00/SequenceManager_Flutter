@@ -343,7 +343,7 @@ class API {
   }
 
   Future<void> deleteCategory(Location location, Category category) async {
-     
+
     final url = Uri.parse(
         "$_baseURL/moderators/company/locations/${location.name}/services/${category.name}"
     );
@@ -488,6 +488,8 @@ class API {
     }
   }
 
+
+
   Future<EmployeeData> callNextCustomer() async {
     final url = Uri.parse("$_baseURL/employees/call-next");
     final response = await http.post(url, headers: header);
@@ -542,6 +544,64 @@ class API {
       int index = rawCookie.indexOf(';');
       header['cookie'] =
           (index == -1) ? rawCookie : rawCookie.substring(0, index);
+    }
+  }
+
+  Future<List<Employee>> updateEmployee(Employee employee, Location location, Category category) async {
+    // HttpWithMiddleware http = HttpWithMiddleware.build(middlewares: [
+    //   HttpLogger(logLevel: LogLevel.BODY),
+    // ]);
+    final url = Uri.parse("$_baseURL/moderators/company/employees");
+    final body = {
+      "email": employee.email,
+      "location": location.name,
+      "service":category.name,
+    };
+    final response =
+    await http.patch(url, body: jsonEncode(body), headers: header);
+
+    if (response.statusCode == 200) {
+      final json = jsonDecode(response.body) as List<dynamic>;
+      return json.map((e) => Employee.fromJson(e)).toList();
+    } else {
+      throw errorMessageFromResponse(response.body);
+    }
+  }
+
+  Future<void> deleteEmployee(Employee employee) async {
+     HttpWithMiddleware http = HttpWithMiddleware.build(middlewares: [
+       HttpLogger(logLevel: LogLevel.BODY),
+     ]);
+    final url = Uri.parse(
+        "$_baseURL/moderators/company/employees/${employee.email}"
+    );
+    final response = await http.delete(url, headers: header);
+
+    if (response.statusCode == 200) {
+      return;
+    } else {
+      throw errorMessageFromResponse(response.body);
+    }
+  }
+
+  Future<List<Employee>> addEmployee(String employee, Location location, Category category) async {
+    //HttpWithMiddleware http = HttpWithMiddleware.build(middlewares: [
+    //  HttpLogger(logLevel: LogLevel.BODY),
+    //]);
+    final url = Uri.parse("$_baseURL/moderators/company/employees");
+    final body = {
+      "email": employee,
+      "location": location.name,
+      "service":category.name,
+    };
+    final response =
+    await http.post(url, body: jsonEncode(body), headers: header);
+
+    if (response.statusCode == 201) {
+      final json = jsonDecode(response.body) as List<dynamic>;
+      return json.map((e) => Employee.fromJson(e)).toList();
+    } else {
+      throw errorMessageFromResponse(response.body);
     }
   }
 }

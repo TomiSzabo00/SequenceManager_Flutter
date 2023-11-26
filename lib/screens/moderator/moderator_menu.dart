@@ -42,7 +42,7 @@ class ModeratorMenu extends StatelessWidget {
                   onPressed: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (context) => const EmployeeList(),
+                        builder: (context) => const EmployeesList(),
                       ),
                     );
                   },

@@ -7,6 +7,7 @@ import 'package:sequence_manager/models/location.dart';
 import 'package:sequence_manager/screens/global/alert_viewmodel.dart';
 
 import '../../models/category.dart';
+import '../../models/employee.dart';
 import '../../models/list/category_list_item.dart';
 
 class ModeratorViewModel extends AlertViewModel {
@@ -128,10 +129,6 @@ class ModeratorViewModel extends AlertViewModel {
       notifyListeners();
       return Future.value([]);
     }
-  }
-
-  void deleteEmployee(ListItem item) {
-
   }
 
   void reset() {
