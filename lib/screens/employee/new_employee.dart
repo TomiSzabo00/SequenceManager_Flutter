@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sequence_manager/models/employee.dart';
 import '../global/alert_wrapper.dart';
 import 'employee_viewmodel.dart';
 

@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import '../../models/location.dart';
 import '../global/alert_wrapper.dart';
 import '../moderator/moderator_viewmodel.dart';
 
 class NewLocationScreen extends StatelessWidget {
-  NewLocationScreen({super.key});
+  const NewLocationScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

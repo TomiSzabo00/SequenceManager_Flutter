@@ -6,9 +6,8 @@ import '../global/alert_wrapper.dart';
 import '../moderator/moderator_viewmodel.dart';
 
 class NewCategoryScreen extends StatelessWidget {
-  NewCategoryScreen({super.key, required this.location});
-
-  Location location;
+  const NewCategoryScreen({super.key, required this.location});
+  final Location location;
 
   @override
   Widget build(BuildContext context) {

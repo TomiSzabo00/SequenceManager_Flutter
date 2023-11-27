@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import '../../models/list/employee_list_item.dart';
 import '../../models/list/list_item.dart';
 import '../employee/edit_employee.dart';
 import '../employee/employee_viewmodel.dart';
 import '../employee/new_employee.dart';
 import '../global/alert_wrapper.dart';
-
-import 'moderator_viewmodel.dart';
 
 class EmployeesList extends StatefulWidget {
   const EmployeesList({super.key});
@@ -20,12 +16,11 @@ class EmployeesList extends StatefulWidget {
 class EmployeesListState extends State<EmployeesList> {
   late Future<List<ListItem>> fetchEmployees;
 
-
   @override
   void initState() {
     super.initState();
-    fetchEmployees = Provider.of<EmployeeViewModel>(context, listen: false)
-        .fetchEmployees();
+    fetchEmployees =
+        Provider.of<EmployeeViewModel>(context, listen: false).fetchEmployees();
   }
 
   @override
@@ -57,26 +52,37 @@ class EmployeesListState extends State<EmployeesList> {
                                     ? null
                                     : Text(data[index].subtitle),
                                 trailing: PopupMenuButton(
-                                  onSelected: (value) {
+                                  onSelected: (value) async {
                                     if (value == "update") {
-                                      Navigator.of(context).push(
+                                      Navigator.of(context)
+                                          .push(
                                         MaterialPageRoute(
-                                          builder: (context) => EditEmployeeScreen(
-                                              employee: (data[index] as EmployeeListItem).employee),
+                                          builder: (context) =>
+                                              EditEmployeeScreen(
+                                                  employee:
+                                                      data[index].employee),
                                         ),
-                                      ).then((_) {
+                                      )
+                                          .then((_) {
                                         setState(() {
                                           viewModel.reset();
-                                          fetchEmployees = Provider.of<EmployeeViewModel>(context, listen: false).fetchEmployees();
+                                          fetchEmployees =
+                                              Provider.of<EmployeeViewModel>(
+                                                      context,
+                                                      listen: false)
+                                                  .fetchEmployees();
                                         });
                                       });
                                     } else if (value == "delete") {
-                                      viewModel.removeEmployee(
-                                          (data[index] as EmployeeListItem).employee
-                                      );
+                                      await viewModel
+                                          .removeEmployee(data[index].employee);
                                       setState(() {
                                         viewModel.reset();
-                                        fetchEmployees = Provider.of<EmployeeViewModel>(context, listen: false).fetchEmployees();
+                                        fetchEmployees =
+                                            Provider.of<EmployeeViewModel>(
+                                                    context,
+                                                    listen: false)
+                                                .fetchEmployees();
                                       });
                                     }
                                   },
@@ -110,14 +116,19 @@ class EmployeesListState extends State<EmployeesList> {
                     height: 50,
                     child: ElevatedButton(
                       onPressed: () {
-                        Navigator.of(context).push(
+                        Navigator.of(context)
+                            .push(
                           MaterialPageRoute(
                             builder: (context) => const NewEmployeeScreen(),
                           ),
-                        ).then((_) {
+                        )
+                            .then((_) {
                           setState(() {
                             viewModel.reset();
-                            fetchEmployees = Provider.of<EmployeeViewModel>(context, listen: false).fetchEmployees();
+                            fetchEmployees = Provider.of<EmployeeViewModel>(
+                                    context,
+                                    listen: false)
+                                .fetchEmployees();
                           });
                         });
                       },
@@ -132,7 +143,6 @@ class EmployeesListState extends State<EmployeesList> {
               ),
             ),
           ),
-        )
-    );
+        ));
   }
 }

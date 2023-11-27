@@ -2,9 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:sequence_manager/helpers/api.dart';
 import 'package:sequence_manager/models/employee.dart';
 import 'package:sequence_manager/models/helper/employee_data.dart';
-import 'package:sequence_manager/models/list/list_item.dart';
 import 'package:sequence_manager/screens/global/alert_viewmodel.dart';
-
 import '../../models/category.dart';
 import '../../models/list/employee_list_item.dart';
 import '../../models/list/location_list_item.dart';
@@ -97,7 +95,7 @@ class EmployeeViewModel extends AlertViewModel {
   }
 
 
-  void removeEmployee(Employee employee) async {
+  Future<void> removeEmployee(Employee employee) async {
     try {
       await API.instance.deleteEmployee(employee).then((value){
         notifyListeners();

@@ -6,8 +6,8 @@ class Employee {
   String name;
   String email;
   Company? company;
-  String location;
-  String category;
+  Location location;
+  Category category;
   int? currentSequenceNumber;
   int? queueCount;
 
@@ -25,8 +25,8 @@ class Employee {
       name: json['name'],
       email: json['email'],
       company: Company.fromString(json['company']),
-      location: json['location'],
-      category: json['service'],
+      location: Location.fromString(json['location']),
+      category: Category.fromString(json['category']),
       currentSequenceNumber: json['currentSequenceNumber'],
       queueCount: json['queueCount'],
     );

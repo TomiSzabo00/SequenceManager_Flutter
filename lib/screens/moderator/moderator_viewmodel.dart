@@ -5,9 +5,7 @@ import 'package:sequence_manager/models/list/list_item.dart';
 import 'package:sequence_manager/models/list/location_list_item.dart';
 import 'package:sequence_manager/models/location.dart';
 import 'package:sequence_manager/screens/global/alert_viewmodel.dart';
-
 import '../../models/category.dart';
-import '../../models/employee.dart';
 import '../../models/list/category_list_item.dart';
 
 class ModeratorViewModel extends AlertViewModel {
