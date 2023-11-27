@@ -15,6 +15,12 @@ class EditEmployeeScreen extends StatefulWidget {
 
 class EditEmployeeScreenState extends State<EditEmployeeScreen> {
   @override
+  void dispose() {
+    context.read<EmployeeViewModel>().reset();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final viewModel = context.watch<EmployeeViewModel>();
     return AlertWrapper<EmployeeViewModel>(

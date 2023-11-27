@@ -130,6 +130,9 @@ class ModeratorViewModel extends AlertViewModel {
   }
 
   void reset() {
-
+    locationController.clear();
+    categoryController.clear();
+    locations.clear();
+    categories.clear();
   }
 }

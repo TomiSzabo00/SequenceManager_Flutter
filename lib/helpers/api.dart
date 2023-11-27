@@ -44,6 +44,7 @@ class API {
 
     if (response.statusCode == 200) {
       updateCookie(response);
+      await Future.delayed(const Duration(milliseconds: 300));
       return User.fromJson(jsonDecode(response.body) as Map<String, dynamic>);
     } else {
       throw errorMessageFromResponse(response.body);

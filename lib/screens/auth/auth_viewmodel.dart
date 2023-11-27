@@ -99,10 +99,19 @@ class AuthViewModel extends AlertViewModel {
   void logout() async {
     try {
       await API.instance.logout();
+      reset();
       loggedInUser = null;
     } catch (e) {
       alertMessage = e.toString();
     }
+    notifyListeners();
+  }
+
+  void reset() {
+    nameController.text = "";
+    emailController.text = "";
+    passwordController.text = "";
+    passwordAgainController.text = "";
     notifyListeners();
   }
 }

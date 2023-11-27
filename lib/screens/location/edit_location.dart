@@ -23,6 +23,12 @@ class EditLocationScreenState extends State<EditLocationScreen> {
   }
 
   @override
+  void dispose() {
+    context.read<ModeratorViewModel>().reset();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final viewModel = Provider.of<ModeratorViewModel>(context);
     return AlertWrapper<ModeratorViewModel>(

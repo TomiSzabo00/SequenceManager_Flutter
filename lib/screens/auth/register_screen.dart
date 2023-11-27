@@ -5,8 +5,6 @@ import 'package:sequence_manager/screens/auth/auth_viewmodel.dart';
 class Registercreen extends StatefulWidget {
   const Registercreen({Key? key}) : super(key: key);
 
-  static const routeName = '/login';
-
   @override
   State<Registercreen> createState() => RegistercreenState();
 }
