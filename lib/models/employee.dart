@@ -19,14 +19,14 @@ class Employee {
       required this.category,
       this.currentSequenceNumber,
       this.queueCount});
-    
+
   factory Employee.fromJson(Map<String, dynamic> json) {
     return Employee(
       name: json['name'],
       email: json['email'],
       company: Company.fromString(json['company']),
       location: Location.fromString(json['location']),
-      category: Category.fromString(json['category']),
+      category: Category.fromString(json['service']),
       currentSequenceNumber: json['currentSequenceNumber'],
       queueCount: json['queueCount'],
     );
