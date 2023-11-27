@@ -6,8 +6,8 @@ class Employee {
   String name;
   String email;
   Company? company;
-  Location location;
-  Category category;
+  Location? location;
+  Category? category;
   int? currentSequenceNumber;
   int? queueCount;
 

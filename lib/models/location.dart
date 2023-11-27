@@ -9,7 +9,7 @@ class Location {
     );
   }
 
-  factory Location.fromString(String name) {
-    return Location(name: name);
+  factory Location.fromString(String? name) {
+    return Location(name: name ?? "");
   }
 }
